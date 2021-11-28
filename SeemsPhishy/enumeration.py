@@ -10,7 +10,7 @@ class ENUMERATION:
     def __init__(self, company_name):
         self.company_name = company_name
         self.files = {} #{header-title : url}
-        self.user_count = 0 #amount of accounts found
+        self.query_results = 0
 
 
     def getFiles(self):
@@ -91,7 +91,7 @@ class ENUMERATION:
             self.total_results += 1
             try:
                 if self.enumerateResults(result):
-                    self.user_count += 1
+                    self.query_results += 1
                     
             except:
                 pass
