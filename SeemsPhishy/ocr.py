@@ -1,14 +1,29 @@
-import pdf2image, pytesseract, os
-from pytesseract import Output, TesseractError
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.layout import LAParams
+from pdfminer.converter import TextConverter
+from io import StringIO
+from pdfminer.pdfpage import PDFPage
 
-
-def pdf_to_text(pdf_path):
-    text = ""
-    images = pdf2image.convert_from_path(pdf_path)#converts pages to image
+def data_retpro(pdf_path, name_txt_file):
     
-    for image in images:#for every page (in form of image)
-        ocr_dict = pytesseract.image_to_data(image, lang='eng', output_type=Output.DICT)#image_to_string()
-        text += " ".join(ocr_dict['text'])
+    #Teil 1 (Extrahieren des Textes aus der Datei)
+    resource_manager = PDFResourceManager(caching=True)
+    out_text = StringIO()
+    codec = 'utf-8'
+    laParams = LAParams()
+    text_converter = TextConverter(resource_manager, out_text, laparams=laParams)
+    fp = open(pdf_path, 'rb')
+    interpreter = PDFPageInterpreter(resource_manager, text_converter)
 
-    return text
+    for page in PDFPage.get_pages(fp, pagenos=set(), maxpages=0, password="", caching=True, check_extractable=True):
+        interpreter.process_page(page)
 
+    text = out_text.getvalue()
+    fp.close()
+    text_converter.close()
+    out_text.close()
+    
+    #Teil 2 (Erstellen einer .txt Datei und speichern des Textes aus Teil 1)
+    file = open(name_txt_file + '.txt', "w", encoding = "utf-8")
+    file.write(text)
+    file.close()
