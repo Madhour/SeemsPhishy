@@ -1,7 +1,8 @@
 from sys import exit
 import argparse
 
-from enumeration import ENUMERATION
+from enumeration import Enumeration
+from ocr import TextParser
 
 seemsphishy = """
 
@@ -31,8 +32,9 @@ if __name__ == "__main__":
 	try:
 		#enumeration
 		if args.enumeration:
-			company_enum = ENUMERATION(args.enumeration)
+			company_enum = Enumeration(args.enumeration)
 			results = company_enum.getFiles()
+			print(TextParser(results).convertFiles())
 
    
 	except KeyboardInterrupt:

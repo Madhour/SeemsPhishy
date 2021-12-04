@@ -5,7 +5,7 @@ import random
 from lib.user_agents import user_agents
 
 
-class ENUMERATION:
+class Enumeration:
 
     def __init__(self, company_name):
         self.company_name = company_name
@@ -62,7 +62,7 @@ class ENUMERATION:
             elif resp.status_code != 200:
                 print("Cannot fetch page")
 
-            if (current_links == self.previous_results) or (self.total_results > 50):#checks if the current side has the same results as the previous, if yes then end of search is reached
+            if (current_links == self.previous_results) or (self.total_results >= 2):#checks if the current side has the same results as the previous, if yes then end of search is reached
                 print("Reached end of search")
                 session = False
                 
@@ -110,6 +110,3 @@ class ENUMERATION:
         except Exception as e:
             print("Error: {}".format(header.text))
             return False
-
-
-
