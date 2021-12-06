@@ -17,7 +17,11 @@ def datasets():
 
 @app.route('/datasets/companies')
 def datasets_companies():
-    return render_template("/datasets_companies.html")
+    import pandas as pd
+    data = [['Alex', 10, 1], ['Bob', 12, 0], ['Clarke', 13, 2], ['Clarke', 13, 3], ['Clarke', 13, 2], ['Clarke', 13, 3]]
+    df = pd.DataFrame(data, columns=['Name', 'Age', "Status"], dtype=float)
+    print(df.head())
+    return render_template("/datasets_companies.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="Status")
 
 
 @app.route('/datasets/pdfs')

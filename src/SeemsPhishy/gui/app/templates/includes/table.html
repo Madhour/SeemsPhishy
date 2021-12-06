@@ -1,0 +1,30 @@
+{% extends "includes/header_nav.html" %}
+{% block content %}
+<table class="table datatable">
+    <tr>
+        {% for col in column_names %}
+        <th>{{col}}</th>
+        {% endfor %}
+    </tr>
+    {% for row in row_data %}
+    <tr>
+        {% for col, cell in zip(column_names, row) %}
+        {% if col == status_col %}
+            {% if cell == 0 %}
+                <td><span class="badge bg-success">Finished</span></td>
+                {% elif cell == 1 %}
+                <td><span class="badge bg-warning">In Progress</span></td>
+                {% elif cell == 2 %}
+                <td><span class="badge bg-danger">Failed</span></td>
+                {% else %}
+                <td><span class="badge bg-info">Not Available</span></td>
+            {% endif %}
+
+        {% else %}
+        <td>{{cell}}</td>
+        {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
