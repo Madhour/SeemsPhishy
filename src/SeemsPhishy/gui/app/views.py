@@ -1,13 +1,20 @@
 from flask import render_template, request, session
 from src.SeemsPhishy.gui.app import app
+from src.SeemsPhishy.gui.app.backend import Backend
 
-
+backend = Backend("debug")
+backend.connect()
 app.secret_key = 'dljsawadslqk24e21cjn!Ew@@dsa5'
 
 
 @app.route('/')  # Home
 def index():
-    return render_template("/index.html")
+    df_companies = backend.list_companies()
+    no_file, no_keywords, no_texts = backend.get_dashboard_infos()
+    return render_template("/index.html", row_data=df_companies.values.tolist(),
+                           column_names=df_companies.columns, zip=zip, status_col="status",
+                           no_file=no_file[0], no_keywords=no_keywords[0], no_texts=no_texts[0],
+                           no_file_sub=no_file[1], no_keywords_sub=no_keywords[1], no_texts_sub=no_texts[1])
 
 
 @app.route('/datasets')
@@ -17,16 +24,14 @@ def datasets():
 
 @app.route('/datasets/companies')
 def datasets_companies():
-    import pandas as pd
-    data = [['Alex', 10, 1], ['Bob', 12, 0], ['Clarke', 13, 2], ['Clarke', 13, 3], ['Clarke', 13, 2], ['Clarke', 13, 3]]
-    df = pd.DataFrame(data, columns=['Name', 'Age', "Status"], dtype=float)
-    print(df.head())
-    return render_template("/datasets_companies.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="Status")
+    df = backend.list_companies()
+    return render_template("/datasets_companies.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="status")
 
 
 @app.route('/datasets/files')
 def datasets_files():
-    return render_template("/datasets.html")
+    df = backend.list_files()
+    return render_template("/datasets.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="status")
 
 
 @app.route('/text-generation/letter')
