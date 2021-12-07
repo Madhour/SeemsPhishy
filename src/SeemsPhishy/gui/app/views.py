@@ -24,9 +24,9 @@ def datasets_companies():
     return render_template("/datasets_companies.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="Status")
 
 
-@app.route('/datasets/pdfs')
-def datasets_pdfs():
-    return render_template("/datasets_pdfs.html")
+@app.route('/datasets/files')
+def datasets_files():
+    return render_template("/datasets.html")
 
 
 @app.route('/text-generation/letter')
