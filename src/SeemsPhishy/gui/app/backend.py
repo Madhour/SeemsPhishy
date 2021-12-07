@@ -42,7 +42,6 @@ class Backend:
         no_file = pd.read_sql_query("SELECT count(n_file_id), count(distinct n_entity_id) FROM datafiles", self.alchemy_connection).values[0]
         no_keywords = pd.read_sql_query("SELECT count(n_keyword_id), count(distinct n_file_id) FROM keywords", self.alchemy_connection).values[0]
         no_texts = pd.read_sql_query("SELECT count(n_entity_id), count(distinct n_entity_id) FROM textsgen", self.alchemy_connection).values[0]
-        print(no_file)
         return no_file, no_keywords, no_texts
 
     def list_companies(self):
