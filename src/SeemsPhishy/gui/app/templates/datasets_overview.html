@@ -16,20 +16,23 @@
                         <div class="row mb-3">
                             <label for="inputText" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="custom_name" placeholder="Your custom name" required>
+                                <input type="text" class="form-control" name="custom_name"
+                                       placeholder="Your custom name" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="inputText" class="col-sm-2 col-form-label">Entity</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="search_term" placeholder="Name of the searched Entity" required>
+                                <input type="text" class="form-control" name="search_term"
+                                       placeholder="Name of the searched Entity" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="inputNumber" class="col-sm-2 col-form-label">Files</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" name="number_of_results" placeholder="Number of downloaded files" required>
+                                <input type="number" class="form-control" name="number_of_results"
+                                       placeholder="Number of downloaded files" required>
                             </div>
                         </div>
 
@@ -38,7 +41,7 @@
                             <div class="col-sm-10">
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck1"checked disabled>
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1" checked disabled>
                                     <label class="form-check-label" for="gridCheck1">
                                         Load Dataset
                                     </label>
@@ -88,7 +91,13 @@
                         </div>
 
                     </form>
-
+                    {% if send %}
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Process started
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
 

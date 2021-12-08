@@ -28,8 +28,8 @@ def index():
 
 
 @app.route('/datasets/new')
-def datasets():
-    return render_template("/datasets_overview.html")
+def datasets(send=False):
+    return render_template("/datasets_overview.html", send=send)
 
 
 @app.route('/datasets/entities')
@@ -60,10 +60,10 @@ def text_generation_newsletter():
 
 
 @app.route('/information-gain/execute')
-def information_gain():
+def information_gain(send=False):
     entities = backend.get_entity_names().entity.values.tolist()
     values = backend.get_entity_names().id.values.tolist()
-    return render_template("/information_gain_overview.html", entities=entities, values=values, zip=zip)
+    return render_template("/information_gain_overview.html", entities=entities, values=values, zip=zip, send=send)
 
 
 @app.route('/information-gain/entities')
@@ -116,7 +116,7 @@ def add_new_entity():
             inputs["word2vec"] = 'off'
 
         backend.new_entity(inputs)
-    return datasets()
+    return datasets(send=True)
 
 
 @app.route('/start_information_gain', methods=['POST', 'GET'])
@@ -134,7 +134,7 @@ def start_information_gain():
         print(inputs)
         backend.exec_information_gain(inputs)
 
-    return information_gain()
+    return information_gain(send=True)
 
 
 @app.route('/display_information', methods=['POST', 'GET'])
