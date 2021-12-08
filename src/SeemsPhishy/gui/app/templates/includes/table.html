@@ -19,7 +19,8 @@
                 {% else %}
                 <td><span class="badge bg-info">Not Available</span></td>
             {% endif %}
-
+        {% elif col == "url" %}
+            <td><a href="{{cell}}" target="_blank">{{cell}}</a></td>
         {% else %}
         <td>{{cell}}</td>
         {% endif %}

@@ -11,13 +11,23 @@ app.secret_key = 'dljsawadslqk24e21cjn!Ew@@dsa5'
 def index():
     df_companies = backend.list_companies()
     no_file, no_keywords, no_texts = backend.get_dashboard_infos()
-    return render_template("/index.html", row_data=df_companies.values.tolist(),
-                           column_names=df_companies.columns, zip=zip, status_col="status",
-                           no_file=no_file[0], no_keywords=no_keywords[0], no_texts=no_texts[0],
-                           no_file_sub=no_file[1], no_keywords_sub=no_keywords[1], no_texts_sub=no_texts[1])
+    donut_label, donut_data = backend.get_dashboard_donut_data()
+    return render_template("/index.html",
+                           row_data=df_companies.values.tolist(),
+                           column_names=df_companies.columns,
+                           zip=zip,
+                           status_col="status",
+                           no_file=no_file[0],
+                           no_keywords=no_keywords[0],
+                           no_texts=no_texts[0],
+                           no_file_sub=no_file[1],
+                           no_keywords_sub=no_keywords[1],
+                           no_texts_sub=no_texts[1],
+                           donut_label=donut_label,         # ["Keyword1", "Keyword2", "other"],
+                           donut_data=donut_data)           # [100, 222, 400])
 
 
-@app.route('/datasets')
+@app.route('/datasets/new')
 def datasets():
     return render_template("/datasets_overview.html")
 
@@ -49,7 +59,7 @@ def text_generation_newsletter():
     return render_template("/text_generation_newsletter.html")
 
 
-@app.route('/information-gain')
+@app.route('/information-gain/execute')
 def information_gain():
     return render_template("/information_gain_overview.html")
 
@@ -63,7 +73,9 @@ def information_gain_companies():
 def information_gain_leakage():
     return render_template("/information_gain_leakage.html")
 
+
 #################################################################
+
 
 @app.route('/faq')
 def faq():
@@ -75,14 +87,9 @@ def settings():
     return render_template("/settings.html")
 
 
-@app.route('/profile')
-def profile():
-    return render_template("/profile.html")
-
 #################################################################
 
-
-@app.route('/search', methods=['POST', 'GET'])
-def search():
-    return render_template("/datasets_companies.html")
-
+@app.errorhandler(404)
+def not_found(e):
+    # defining function
+    return render_template("404.html")

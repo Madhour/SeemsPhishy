@@ -1,0 +1,16 @@
+{% extends "includes/table.html" %}
+{% block title %}404 Error{% endblock %}
+{% block headline %}Page not found - 404{% endblock %}
+{% block breadcrumbs %}Error{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+        <h2>The page you are looking for doesn't exist.</h2>
+        <a class="btn btn-primary btn-sm" href="/">Back to home</a>
+        <img src="../static/assets/img/Logo_big.png" class="img-fluid py-5" alt="Page Not Found">
+    </section>
+
+</div>
+{% endblock %}

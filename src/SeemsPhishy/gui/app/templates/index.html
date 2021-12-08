@@ -200,13 +200,13 @@
                             new Chart(document.querySelector('#doughnutChart'), {
                                 type: 'doughnut',
                                 data: {
-                                    labels: ['Red', 'Blue', 'Yellow'],
+                                    labels: ['{{donut_label[0]}}', '{{donut_label[1]}}', '{{donut_label[2]}}'],
                                     datasets: [{
                                         label: 'Most Common Keywords',
-                                        data: [100, 150, 500],
+                                        data: ['{{donut_data[0]}}', '{{donut_data[1]}}', '{{donut_data[2]}}'],
                                         backgroundColor: [
-                                            'rgb(50,50,51)',
-                                            'rgb(54,235,111)',
+                                            'rgb(68,68,68)',
+                                            'rgb(230,144,48)',
                                             'rgb(46,143,183)'
                                         ],
                                         hoverOffset: 4
