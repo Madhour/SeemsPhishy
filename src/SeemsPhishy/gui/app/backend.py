@@ -69,6 +69,15 @@ class Backend:
         df = pd.read_sql_query(s_query, self.alchemy_connection)
         return df
 
+    def list_leakage_files(self):
+        s_query = """
+        SELECT searchedentities.s_name as entity, datafiles.s_title as title, datafiles.n_status as status, datafiles.s_path as url
+        FROM datafiles INNER JOIN searchedentities ON  datafiles.n_entity_id = searchedentities.n_entity_id
+        WHERE datafiles.b_leakage_warn = true
+        """
+        df = pd.read_sql_query(s_query, self.alchemy_connection)
+        return df
+
     def get_dashboard_donut_data(self, split=2):
         s_query = "SELECT * FROM keywords"
         df = pd.read_sql_query(s_query, self.alchemy_connection)
@@ -90,6 +99,17 @@ class Backend:
                 SELECT s_name as entity, n_entity_id as id
                 FROM searchedentities
                 """
+        df = pd.read_sql_query(s_query, self.alchemy_connection)
+        return df
+
+    def get_keywords(self, entity_id):
+        s_query = f"""
+        SELECT d.s_title, k.s_keyword, k.s_tag, k.n_no_occurcances
+        FROM keywords k
+        INNER JOIN datafiles d on k.n_file_id = d.n_file_id
+        INNER JOIN searchedentities s on s.n_entity_id = d.n_entity_id
+        WHERE s.n_entity_id = {int(entity_id)}
+                        """
         df = pd.read_sql_query(s_query, self.alchemy_connection)
         return df
 

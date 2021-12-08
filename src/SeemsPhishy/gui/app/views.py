@@ -68,12 +68,16 @@ def information_gain():
 
 @app.route('/information-gain/entities')
 def information_gain_companies():
-    return render_template("/information_gain_companies.html")
+    entities = backend.get_entity_names().entity.values.tolist()
+    values = backend.get_entity_names().id.values.tolist()
+    return render_template("/information_gain_companies.html", entities=entities, values=values, zip=zip)
 
 
 @app.route('/information-gain/leakage')
 def information_gain_leakage():
-    return render_template("/information_gain_leakage.html")
+    df = backend.list_leakage_files()
+    return render_template("/information_gain_leakage.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip,
+                           status_col="status")
 
 
 #################################################################
@@ -131,3 +135,14 @@ def start_information_gain():
         backend.exec_information_gain(inputs)
 
     return information_gain()
+
+
+@app.route('/display_information', methods=['POST', 'GET'])
+def display_keyword_information():
+    if request.method == 'POST':
+        entity_id = request.form.get("entity_id")
+
+        df = backend.get_keywords(entity_id)
+        return render_template("/information_gain_companies_detail.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="status")
+
+    return index()

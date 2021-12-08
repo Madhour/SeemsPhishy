@@ -35,14 +35,15 @@ CREATE TABLE TextsGen
 
 CREATE TABLE DataFiles
 (
-    n_file_id     SERIAL UNIQUE NOT NULL,
-    n_entity_id   INT           NOT NULL,
-    n_status      INT           NOT NULL, -- 0,1,2,3 (ready, in progress, failed, error)
-    s_path        VARCHAR(4096),
-    s_title       VARCHAR(4096),
-    s_description VARCHAR(4096),
-    s_text        VARCHAR,
-    ts_created    TIMESTAMP,
+    n_file_id      SERIAL UNIQUE NOT NULL,
+    n_entity_id    INT           NOT NULL,
+    n_status       INT           NOT NULL, -- 0,1,2,3 (ready, in progress, failed, error)
+    s_path         VARCHAR(4096),
+    s_title        VARCHAR(4096),
+    s_description  VARCHAR(4096),
+    s_text         VARCHAR,
+    ts_created     TIMESTAMP,
+    b_leakage_warn BOOLEAN DEFAULT False,
     PRIMARY KEY (n_file_id),
     FOREIGN KEY (n_entity_id) REFERENCES SearchedEntities (n_entity_id)
 
