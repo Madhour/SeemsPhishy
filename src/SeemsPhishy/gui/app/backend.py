@@ -47,9 +47,9 @@ class Backend:
                                      self.alchemy_connection).values[0]
         return no_file, no_keywords, no_texts
 
-    def list_companies(self):
+    def list_entities(self):
         s_query = """
-        SELECT s.s_name AS Company, s.n_status AS status, 
+        SELECT s.s_name AS entity, s.n_status AS status, 
         b_ner as NER, b_tfidf as tfidf, b_word2vec as word2vec,
         count(d.n_file_id) as files, count(distinct k.s_keyword) as keywords
         FROM SearchedEntities s 
@@ -62,7 +62,7 @@ class Backend:
 
     def list_files(self):
         s_query = """
-        SELECT searchedentities.s_name as company, datafiles.s_title as title, datafiles.n_status as status, datafiles.s_path as url
+        SELECT searchedentities.s_name as entity, datafiles.s_title as title, datafiles.n_status as status, datafiles.s_path as url
         FROM datafiles INNER JOIN searchedentities ON  datafiles.n_entity_id = searchedentities.n_entity_id
         
         """
@@ -85,9 +85,28 @@ class Backend:
         data.append(rest)
         return labels, data
 
-    def load_new_entity(self, form_infos):
-        # query = object mit infos aus formular
-        # async call_data_retrival(query, db_conncection)       # no return, # db status change define in funct
+    def get_entity_names(self):
+        s_query = """
+                SELECT s_name as entity, n_entity_id as id
+                FROM searchedentities
+                """
+        df = pd.read_sql_query(s_query, self.alchemy_connection)
+        return df
+
+    ################################################################################
+
+    def new_entity(self, form_infos):
+        self.log.info(f"Add new entity")
+        self.log.debug(f"Form: {form_infos}")
+
+        # async call_data_retrival(form_infos, db_conncection)       # no return, # db status change define in funct
+        return True
+
+    def exec_information_gain(self, form_infos):
+        self.log.info(f"Execute Information Gain Process")
+        self.log.debug(f"Form: {form_infos}")
+
+        # async call_data_keywords(form_infos, db_conncection)       # no return, # db status change define in funct
         return True
 
 
@@ -96,4 +115,5 @@ if __name__ == "__main__":
     backend.connect()
     # backend.test()
     # backend.list_companies()
-    backend.get_dashboard_donut_data()
+    # backend.get_dashboard_donut_data()
+    backend.get_entity_names()

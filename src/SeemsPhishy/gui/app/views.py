@@ -9,7 +9,7 @@ app.secret_key = 'dljsawadslqk24e21cjn!Ew@@dsa5'
 
 @app.route('/')  # Home
 def index():
-    df_companies = backend.list_companies()
+    df_companies = backend.list_entities()
     no_file, no_keywords, no_texts = backend.get_dashboard_infos()
     donut_label, donut_data = backend.get_dashboard_donut_data()
     return render_template("/index.html",
@@ -34,7 +34,7 @@ def datasets():
 
 @app.route('/datasets/entities')
 def datasets_companies():
-    df = backend.list_companies()
+    df = backend.list_entities()
     return render_template("/datasets_companies.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="status")
 
 
@@ -61,7 +61,9 @@ def text_generation_newsletter():
 
 @app.route('/information-gain/execute')
 def information_gain():
-    return render_template("/information_gain_overview.html")
+    entities = backend.get_entity_names().entity.values.tolist()
+    values = backend.get_entity_names().id.values.tolist()
+    return render_template("/information_gain_overview.html", entities=entities, values=values, zip=zip)
 
 
 @app.route('/information-gain/entities')
@@ -93,3 +95,39 @@ def settings():
 def not_found(e):
     # defining function
     return render_template("404.html")
+
+
+#################################################################
+@app.route('/add_new_entity', methods=['POST', 'GET'])
+def add_new_entity():
+    if request.method == 'POST':
+        inputs = dict(request.form)
+
+        if "ner" not in inputs:
+            inputs["ner"] = 'off'
+
+        if "tf_idf" not in inputs:
+            inputs["tf_idf"] = 'off'
+        if "word2vec" not in inputs:
+            inputs["word2vec"] = 'off'
+
+        backend.new_entity(inputs)
+    return datasets()
+
+
+@app.route('/start_information_gain', methods=['POST', 'GET'])
+def start_information_gain():
+    if request.method == 'POST':
+        inputs = dict(request.form)
+        print(inputs)
+        if "ner" not in inputs:
+            inputs["ner"] = 'off'
+
+        if "tf_idf" not in inputs:
+            inputs["tf_idf"] = 'off'
+        if "word2vec" not in inputs:
+            inputs["word2vec"] = 'off'
+        print(inputs)
+        backend.exec_information_gain(inputs)
+
+    return information_gain()

@@ -12,18 +12,24 @@
                     <h5 class="card-title">Search Entity</h5>
 
                     <!-- General Form Elements -->
-                    <form>
+                    <form action="/add_new_entity" method="post">
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="custom_name" placeholder="Your custom name" required>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <label for="inputText" class="col-sm-2 col-form-label">Entity</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" placeholder="Name of the searched Entity">
+                                <input type="text" class="form-control" name="search_term" placeholder="Name of the searched Entity" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="inputNumber" class="col-sm-2 col-form-label">Files</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" placeholder="Number of downloaded files">
+                                <input type="number" class="form-control" name="number_of_results" placeholder="Number of downloaded files" required>
                             </div>
                         </div>
 
@@ -52,20 +58,20 @@
                             <div class="col-sm-10">
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck3">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck3" name="tf_idf">
                                     <label class="form-check-label" for="gridCheck3">
                                         TF-IDF
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck4">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck4" name="ner">
                                     <label class="form-check-label" for="gridCheck4">
                                         Named Entity Recognition (NER)
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck5">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck5" name="word2vec">
                                     <label class="form-check-label" for="gridCheck5">
                                         Word2Vec
                                     </label>
@@ -77,7 +83,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary">Start</button>
+                                <button type="submit" name="start_entity_search" class="btn btn-primary">Start</button>
                             </div>
                         </div>
 

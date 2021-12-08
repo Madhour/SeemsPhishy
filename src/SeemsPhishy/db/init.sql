@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS SearchedEntities;
 -- Create tables
 CREATE TABLE SearchedEntities
 (
-    n_entity_id SERIAL UNIQUE NOT NULL,
-    n_status    INT           NOT NULL, -- 0,1,2,3 (ready, in progress, failed, error)
-    s_name      VARCHAR(1024) NOT NULL,
+    n_entity_id SERIAL UNIQUE        NOT NULL,
+    n_status    INT                  NOT NULL, -- 0,1,2,3 (ready, in progress, failed, error)
+    s_name      VARCHAR(1024) UNIQUE NOT NULL,
     s_query     VARCHAR(2048),
     ts_searched TIMESTAMP,
     b_tfidf     BOOLEAN DEFAULT False,
