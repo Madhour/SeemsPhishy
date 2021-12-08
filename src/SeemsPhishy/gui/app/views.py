@@ -50,8 +50,10 @@ def text_generation_letter():
 
 
 @app.route('/text-generation/email')
-def text_generation_email():
-    return render_template("/text_generation_email.html")
+def text_generation_email(send=False):
+    entities = backend.get_entity_names().entity.values.tolist()
+    values = backend.get_entity_names().id.values.tolist()
+    return render_template("/text_generation_email.html", entities=entities, values=values, zip=zip, send=send)
 
 
 @app.route('/text-generation/newsletter')
