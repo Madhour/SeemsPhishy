@@ -32,7 +32,7 @@ def datasets():
     return render_template("/datasets_overview.html")
 
 
-@app.route('/datasets/companies')
+@app.route('/datasets/entities')
 def datasets_companies():
     df = backend.list_companies()
     return render_template("/datasets_companies.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="status")
@@ -64,7 +64,7 @@ def information_gain():
     return render_template("/information_gain_overview.html")
 
 
-@app.route('/information-gain/companies')
+@app.route('/information-gain/entities')
 def information_gain_companies():
     return render_template("/information_gain_companies.html")
 

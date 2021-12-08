@@ -49,18 +49,20 @@ class Backend:
 
     def list_companies(self):
         s_query = """
-        SELECT s.s_name AS Company, s.n_status AS status, count(d.n_file_id) as files, count(distinct k.s_keyword) as keywords
+        SELECT s.s_name AS Company, s.n_status AS status, 
+        b_ner as NER, b_tfidf as tfidf, b_word2vec as word2vec,
+        count(d.n_file_id) as files, count(distinct k.s_keyword) as keywords
         FROM SearchedEntities s 
             INNER JOIN datafiles d on S.n_entity_id = d.n_entity_id
             INNER JOIN keywords k on d.n_file_id = k.n_file_id
-        GROUP BY s.s_name, S.n_status
+        GROUP BY s.s_name, S.n_status, b_ner, b_tfidf, b_word2vec
         """
         df = pd.read_sql_query(s_query, self.alchemy_connection)
         return df
 
     def list_files(self):
         s_query = """
-        SELECT searchedentities.s_name as company, datafiles.s_title as filename, datafiles.n_status as status, datafiles.s_path as url
+        SELECT searchedentities.s_name as company, datafiles.s_title as title, datafiles.n_status as status, datafiles.s_path as url
         FROM datafiles INNER JOIN searchedentities ON  datafiles.n_entity_id = searchedentities.n_entity_id
         
         """
@@ -82,6 +84,11 @@ class Backend:
         data = df_top.n_no_occurcances.to_list()
         data.append(rest)
         return labels, data
+
+    def load_new_entity(self, form_infos):
+        # query = object mit infos aus formular
+        # async call_data_retrival(query, db_conncection)       # no return, # db status change define in funct
+        return True
 
 
 if __name__ == "__main__":

@@ -3,5 +3,92 @@
 {% block headline %}Add New{% endblock %}
 {% block breadcrumbs %}Datasets{% endblock %}
 {% block content %}
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Search Entity</h5>
+
+                    <!-- General Form Elements -->
+                    <form>
+                        <div class="row mb-3">
+                            <label for="inputText" class="col-sm-2 col-form-label">Entity</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Name of the searched Entity">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="inputNumber" class="col-sm-2 col-form-label">Files</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" placeholder="Number of downloaded files">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">Data Processing</legend>
+                            <div class="col-sm-10">
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1"checked disabled>
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Load Dataset
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck2" checked disabled>
+                                    <label class="form-check-label" for="gridCheck2">
+                                        Execute Data Retrival
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">Information Gain Process</legend>
+                            <div class="col-sm-10">
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck3">
+                                    <label class="form-check-label" for="gridCheck3">
+                                        TF-IDF
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck4">
+                                    <label class="form-check-label" for="gridCheck4">
+                                        Named Entity Recognition (NER)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck5">
+                                    <label class="form-check-label" for="gridCheck5">
+                                        Word2Vec
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-primary">Start</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
 {% endblock %}

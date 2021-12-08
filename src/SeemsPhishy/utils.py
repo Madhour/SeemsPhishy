@@ -1,5 +1,7 @@
 import logging
 
+# TODO database connect, write, read, delete
+
 
 def set_logger(name, mode="debug", write_log=False, full_path="./debug.log", write_mode="a"):
     """

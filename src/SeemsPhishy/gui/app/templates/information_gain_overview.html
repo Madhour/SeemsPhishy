@@ -3,5 +3,70 @@
 {% block headline %}Execute Information Gain Process{% endblock %}
 {% block breadcrumbs %}Information Gain{% endblock %}
 {% block content %}
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Select Entity</h5>
+
+                    <!-- General Form Elements -->
+                    <form>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Select</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">Information Gain Process</legend>
+                            <div class="col-sm-10">
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck3">
+                                    <label class="form-check-label" for="gridCheck3">
+                                        TF-IDF
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck4">
+                                    <label class="form-check-label" for="gridCheck4">
+                                        Named Entity Recognition (NER)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck5">
+                                    <label class="form-check-label" for="gridCheck5">
+                                        Word2Vec
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-primary">Start</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
 
 {% endblock %}
