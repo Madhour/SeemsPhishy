@@ -5,6 +5,8 @@ from src.SeemsPhishy.gui.app.backend import Backend
 backend = Backend("debug")
 backend.connect()
 app.secret_key = 'dljsawadslqk24e21cjn!Ew@@dsa5'
+global text_gen_infos
+text_gen_infos = None
 
 
 @app.route('/')  # Home
@@ -44,21 +46,11 @@ def datasets_files():
     return render_template("/datasets.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="status")
 
 
-@app.route('/text-generation/letter')
-def text_generation_letter():
-    return render_template("/text_generation_letter.html")
-
-
-@app.route('/text-generation/email')
-def text_generation_email(send=False):
+@app.route('/textgeneration')
+def text_generation_1(send=False):
     entities = backend.get_entity_names().entity.values.tolist()
     values = backend.get_entity_names().id.values.tolist()
-    return render_template("/text_generation_email.html", entities=entities, values=values, zip=zip, send=send)
-
-
-@app.route('/text-generation/newsletter')
-def text_generation_newsletter():
-    return render_template("/text_generation_newsletter.html")
+    return render_template("/text_generation_1.html", entities=entities, values=values, zip=zip, send=send)
 
 
 @app.route('/information-gain/execute')
@@ -134,9 +126,9 @@ def start_information_gain():
         if "word2vec" not in inputs:
             inputs["word2vec"] = 'off'
         print(inputs)
-        backend.exec_information_gain(inputs)
+        backend.generate_text(inputs, type="email")
 
-    return information_gain(send=True)
+    return text_generation_1(send=True)
 
 
 @app.route('/display_information', methods=['POST', 'GET'])
@@ -148,3 +140,44 @@ def display_keyword_information():
         return render_template("/information_gain_companies_detail.html", row_data=df.values.tolist(), column_names=df.columns, zip=zip, status_col="status")
 
     return index()
+
+
+@app.route('/text_gen2', methods=['POST', 'GET'])
+def text_gen_choose_keywords():
+    if request.method == 'POST':
+        inputs = dict(request.form)
+        if "ner" not in inputs:
+            inputs["ner"] = 'off'
+        if "tf_idf" not in inputs:
+            inputs["tf_idf"] = 'off'
+        if "word2vec" not in inputs:
+            inputs["word2vec"] = 'off'
+        if "reco_keywords" not in inputs:
+            inputs["reco_keywords"] = 'off'
+
+        print(inputs)
+
+        # fill text_gen_infos var
+        global text_gen_infos
+        text_gen_infos = inputs
+
+    entities = backend.get_entity_names().entity.values.tolist()
+    values = backend.get_entity_names().id.values.tolist()
+    if inputs["reco_keywords"] == "off":
+        return render_template("/text_generation_2.html", entities=entities, values=values, zip=zip, send=False)
+    else:
+        return text_result()
+
+
+@app.route('/text_result', methods=['POST', 'GET'])
+def text_result():
+    global text_gen_infos
+    print(text_gen_infos)
+    if text_gen_infos is not None:
+        inputs = text_gen_infos | dict(request.form)        # needs python 3.9 or higher (joins two dicts together)
+    else:
+        inputs = dict(request.form)
+    backend.generate_text(inputs)
+
+    # TODO display result
+    return render_template("/text_generation_result.html")

@@ -129,6 +129,14 @@ class Backend:
         # async call_data_keywords(form_infos, db_conncection)       # no return, # db status change define in funct
         return True
 
+    def generate_text(self, form_infos):
+        self.log.info(f"Execute Textgeneration")
+        self.log.debug(f"Form: {form_infos}")
+
+        # if type == "mail":
+        # async generate_mail(form_infos, db_conncection)       # no return, # db status change define in funct
+        return True
+
 
 if __name__ == "__main__":
     backend = Backend()

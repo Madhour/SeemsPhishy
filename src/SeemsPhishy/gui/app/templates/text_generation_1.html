@@ -1,6 +1,6 @@
 {% extends "includes/form.html" %}
 {% block title %}Text Generation{% endblock %}
-{% block headline %}E-Mail{% endblock %}
+{% block headline %}Configure{% endblock %}
 {% block breadcrumbs %}Text Generation{% endblock %}
 {% block content %}
 <section class="section">
@@ -9,10 +9,10 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Generate a E-Mail</h5>
+                    <h5 class="card-title">Generate Text</h5>
 
                     <!-- General Form Elements -->
-                    <form action="/start_information_gain" method="post">
+                    <form action="/text_gen2" method="post">
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Entity</label>
                             <div class="col-sm-10">
@@ -26,33 +26,45 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Text type</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Default select example" name="text_type">
+                                    <option selected>Open this select menu</option>
+                                    <option value="email">E-Mail</option>
+                                    <option value="letter">Business Letter</option>
+                                    <option value="newsletter">Newsletter</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="inputText" class="col-sm-2 col-form-label">URL</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="custom_name"
+                                <input type="text" class="form-control" name="url"
                                        placeholder="Call to action URL">
                             </div>
                         </div>
 
-                        <fieldset class="row mb-3">
+                        <fieldset class="row mb-3" name="radio_language_level">
                             <legend class="col-form-label col-sm-2 pt-0">Level</legend>
                             <div class="col-sm-10">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                           value="option1" checked>
+                                    <input class="form-check-input" type="radio" name="radio_language_level" id="gridRadios1"
+                                           value="formal" checked>
                                     <label class="form-check-label" for="gridRadios1">
                                         Formal
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
-                                           value="option2">
+                                    <input class="form-check-input" type="radio" name="radio_language_level" id="gridRadios2"
+                                           value="business">
                                     <label class="form-check-label" for="gridRadios2">
                                         Business
                                     </label>
                                 </div>
                                 <div class="form-check disabled">
-                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                           value="option3">
+                                    <input class="form-check-input" type="radio" name="radio_language_level" id="gridRadios3"
+                                           value="casual">
                                     <label class="form-check-label" for="gridRadios3">
                                         Casual
                                     </label>
@@ -87,55 +99,37 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox"
+                                           id="flexSwitchCheckDefault" name="reco_keywords">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">
+                                        Use recommended Keywords
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary">Generate</button>
+                                <button type="submit" class="btn btn-primary">Next</button>
                             </div>
                         </div>
 
-                    </form>
-                    {% if send %}
-                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                        <i class="bi bi-info-circle me-1"></i>
-                        Process started
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-
-        </div>
-        <div class="col-lg-6">
-
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Select Keywords</h5>
-                    <form>
-                        <div class="row mb-5">
-                            <label class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Select all Keywords
-                                        input</label>
-                                </div>
-                            </div>
+                        {% if send %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Process started
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <div class="row mb-5">
-                            <label class="col-sm-2 col-form-label">Keywords</label>
-                            <div class="col-sm-10">
-                                <select class="form-select" multiple aria-label="multiple select example">
-                                    {% for keyword, id in zip(keywords, ids) %}
-                                    <option value="{{ id }}">{{keyword}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </form>
+                        {% endif %}
 
                 </div>
+
             </div>
 
         </div>

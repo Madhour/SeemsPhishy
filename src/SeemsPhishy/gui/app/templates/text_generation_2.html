@@ -1,0 +1,60 @@
+{% extends "includes/form.html" %}
+{% block title %}Text Generation{% endblock %}
+{% block headline %}Configure{% endblock %}
+{% block breadcrumbs %}Text Generation{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Generate Text</h5>
+
+                    <!-- General Form Elements -->
+                    <form action="/text_result" method="post">
+                        <div class="col-lg-6">
+
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Keys</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" multiple aria-label="multiple select example"
+                                            name="list_keywords">
+                                        <option value="-1">Choose Keywords</option>
+                                        {% for keyword, id in zip(keywords, ids) %}
+                                        <option value="{{ id }}">{{keyword}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Generate</button>
+                                </div>
+                            </div>
+
+                            {% if send %}
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Process started
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
