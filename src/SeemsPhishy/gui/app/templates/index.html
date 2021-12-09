@@ -97,29 +97,16 @@
                                     </h2>
                                     <div id="flush-collapseOne" class="accordion-collapse collapse"
                                          aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">Placeholder content for this accordion, which is
-                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
-                                            first item's accordion body.
+                                        <div class="accordion-body">
+                                            Under datasets all information about the different entities are stored. You
+                                            can add new datasets and view existing ones.
+                                            <br>
+                                            <br>
+                                            <button type="button" class="btn btn-primary">Add New</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingTwo">
-                                        <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
-                                                aria-expanded="false" aria-controls="flush-collapseTwo">
-                                            Text Generation
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">Placeholder content for this accordion, which is
-                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
-                                            second item's accordion body. Let's imagine this being filled with some
-                                            actual content.
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="flush-headingThree">
                                         <button class="accordion-button collapsed " type="button"
@@ -136,6 +123,24 @@
                                             of content, but just filling up the space to make it look, at least at first
                                             glance, a bit more representative of how this would look in a real-world
                                             application.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                                aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Text Generation
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            second item's accordion body. Let's imagine this being filled with some
+                                            actual content.
                                         </div>
                                     </div>
                                 </div>
@@ -159,21 +164,23 @@
                                 <tr>
                                     {% for col, cell in zip(column_names, row) %}
                                     {% if col == status_col %}
-                                        {% if cell == 0 %}
-                                        <td><span class="badge bg-success">Finished</span></td>
-                                        {% elif cell == 1 %}
-                                        <td><span class="badge bg-warning">In Progress</span></td>
-                                        {% elif cell == 2 %}
-                                        <td><span class="badge bg-danger">Failed</span></td>
-                                        {% else %}
-                                        <td><span class="badge bg-info">Not Available</span></td>
-                                        {% endif %}
+                                    {% if cell == 0 %}
+                                    <td><span class="badge bg-success">Finished</span></td>
+                                    {% elif cell == 1 %}
+                                    <td><span class="badge bg-warning">In Progress</span></td>
+                                    {% elif cell == 2 %}
+                                    <td><span class="badge bg-danger">Failed</span></td>
+                                    {% else %}
+                                    <td><span class="badge bg-info">Not Available</span></td>
+                                    {% endif %}
                                     {% elif col in ["ner", "tfidf", "word2vec"] %}
-                                        {% if cell %}
-                                            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"> Done</i></span></td>
-                                        {% else %}
-                                            <td><span class="badge bg-danger"> <i class="bi bi-dash-circle me-1"> Not Done</i></span></td>
-                                        {% endif %}
+                                    {% if cell %}
+                                    <td><span class="badge bg-success"><i
+                                            class="bi bi-check-circle me-1"> Done</i></span></td>
+                                    {% else %}
+                                    <td><span class="badge bg-danger"> <i
+                                            class="bi bi-dash-circle me-1"> Not Done</i></span></td>
+                                    {% endif %}
 
                                     {% else %}
                                     <td>{{cell}}</td>
@@ -193,7 +200,6 @@
 
         <!-- Right side columns -->
         <div class="col-lg-4">
-
             <!-- Most Common Keywords-->
             <div class="card">
                 <div class="card-body">
