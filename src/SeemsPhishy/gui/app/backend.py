@@ -1,6 +1,8 @@
 from src.SeemsPhishy.utils import set_logger
 import sqlalchemy
 import pandas as pd
+from src.SeemsPhishy.dataretrieval.enumeration import Enumeration
+from src.SeemsPhishy.dataretrieval.ocr import TextParser
 
 
 class Backend:
@@ -119,7 +121,7 @@ class Backend:
         self.log.info(f"Add new entity")
         self.log.debug(f"Form: {form_infos}")
 
-        # async call_data_retrival(form_infos, db_conncection)       # no return, # db status change define in funct
+        # async call_data_retrieval(form_infos, db_connection)       # no return, # db status change define in funct
         return True
 
     def exec_information_gain(self, form_infos):
@@ -137,8 +139,21 @@ class Backend:
         # async generate_mail(form_infos, db_conncection)       # no return, # db status change define in funct
         return True
 
+    ################################################################################
+    def call_data_retrieval(form_infos, db_connection = None):
+        # retrieve data
+        company_enum = Enumeration(form_infos.organization) # Input: organization name, amount of pages to query (to be implemented)
+        results = company_enum.getFiles()
+        corpus = TextParser(results).convertFiles() # extracts text from PDFs
+        print(corpus)
+        
+        # store data in db
+            # DB-query
+        
+        return True
 
 if __name__ == "__main__":
+    call_data_retrieval({"organization":"Protiviti GmbH"})
     backend = Backend()
     backend.connect()
     # backend.test()
