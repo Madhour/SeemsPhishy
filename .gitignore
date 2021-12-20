@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.DS_Store
 # C extensions
 *.so
 
@@ -132,3 +132,8 @@ dmypy.json
 /.idea/modules.xml
 /.idea/SeemsPhishy.iml
 /.idea/vcs.xml
+.gitignore
+
+
+#misc
+SeemsPhishy/lib/PDF/*.pdf
