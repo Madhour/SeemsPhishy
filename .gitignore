@@ -136,4 +136,4 @@ dmypy.json
 
 
 #misc
-SeemsPhishy/lib/PDF/*.pdf
+src/SeemsPhishy/dataretrieval/lib/PDF/*.pdf
