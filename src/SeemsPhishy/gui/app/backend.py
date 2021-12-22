@@ -120,37 +120,37 @@ class Backend:
     def new_entity(self, form_infos):
         self.log.info(f"Add new entity")
         self.log.debug(f"Form: {form_infos}")
-
+        
         # async call_data_retrieval(form_infos, db_connection)       # no return, # db status change define in funct
-        return True
-
-    def exec_information_gain(self, form_infos):
-        self.log.info(f"Execute Information Gain Process")
-        self.log.debug(f"Form: {form_infos}")
-
-        # async call_data_keywords(form_infos, db_conncection)       # no return, # db status change define in funct
-        return True
-
-    def generate_text(self, form_infos):
-        self.log.info(f"Execute Textgeneration")
-        self.log.debug(f"Form: {form_infos}")
-
-        # if type == "mail":
-        # async generate_mail(form_infos, db_conncection)       # no return, # db status change define in funct
-        return True
-
-    ################################################################################
-    def call_data_retrieval(form_infos, db_connection = None):
-        # retrieve data
         company_enum = Enumeration(form_infos.organization) # Input: organization name, amount of pages to query (to be implemented)
         results = company_enum.getFiles()
         corpus = TextParser(results).convertFiles() # extracts text from PDFs
         print(corpus)
         
+                
         # store data in db
             # DB-query
-        
+            
         return True
+
+    def exec_information_gain(self, form_infos):
+        self.log.info(f"Execute Information Gain Process")
+        self.log.debug(f"Form: {form_infos}")
+        
+        # Function(model_choice, text)
+        # async call_data_keywords(form_infos, db_conncection)       # no return, # db status change define in funct
+        return True
+
+    def generate_text(self, form_infos):
+        # User chooses keywords
+        self.log.info(f"Execute Textgeneration")
+        self.log.debug(f"Form: {form_infos}")
+
+        # if type == "mail":
+        # async generate_mail(form_infos, db_conncection)       # no return, # db status change define in funct
+        return True # return rendered newsletter template
+
+    ################################################################################
 
 if __name__ == "__main__":
     call_data_retrieval({"organization":"Protiviti GmbH"})
