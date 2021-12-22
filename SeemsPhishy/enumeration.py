@@ -2,8 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 import random
 
-from lib.user_agents import user_agents
-
 
 class ENUMERATION:
 

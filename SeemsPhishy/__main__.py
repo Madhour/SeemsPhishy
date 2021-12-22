@@ -2,6 +2,7 @@ from sys import exit
 import argparse
 
 from enumeration import ENUMERATION
+from textgen import generate, buildMail
 
 seemsphishy = """
 
@@ -25,7 +26,8 @@ if __name__ == "__main__":
  
 	#arguments
 	args = argparse.ArgumentParser(description="Main", formatter_class=argparse.RawTextHelpFormatter, usage=argparse.SUPPRESS)
-	args.add_argument("-e", "--enumerate", dest="enumeration", type=str, help="Target company name for enumeration", required=True)
+	args.add_argument("-e", "--enumerate", dest="enumeration", type=str, help="Target company name for enumeration", required=False)
+	args.add_argument("-g", "--generate", dest="generate", type=str, help="Strings to generate text from", required=False)
 	args = args.parse_args()
 	#argument handler
 	try:
@@ -34,6 +36,12 @@ if __name__ == "__main__":
 			company_enum = ENUMERATION(args.enumeration)
 			results = company_enum.getFiles()
 
+		if args.generate:
+			text = generate(args.generate)
+			print(text)
+			buildMail(text, "TestCorp.")
+
+			
    
 	except KeyboardInterrupt:
 		print("[MAIN] Closing...")
