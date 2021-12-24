@@ -132,3 +132,5 @@ dmypy.json
 /.idea/modules.xml
 /.idea/SeemsPhishy.iml
 /.idea/vcs.xml
+.DS_Store
+SeemsPhishy/newsletters/
