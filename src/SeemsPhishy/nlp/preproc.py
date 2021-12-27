@@ -1,7 +1,6 @@
 
-text = "This is an example text. It's purpose is to test this programm."
 
-def pipe_preprocessing(s_w_r, pref_operation):
+def pipe_preprocessing(text, s_w_r, pref_operation):
 
     #notwendigen Module
     import spacy
@@ -55,8 +54,8 @@ def pipe_preprocessing(s_w_r, pref_operation):
         stemm_list.append(p.stem(w))
 
 
-        data = {'Text':text_df, 'Lemma':lemma_df,'Stemm':stemm_list, 'POS':pos_df, 'TAG':tag_df,'DEP':dep_df, 'SHAPE':shape_df, 'STOP':stop_df }
-        df = pd.DataFrame(data)
+    data = {'Text':text_df, 'Lemma':lemma_df,'Stemm':stemm_list, 'POS':pos_df, 'TAG':tag_df,'DEP':dep_df, 'SHAPE':shape_df, 'STOP':stop_df }
+    df = pd.DataFrame(data)
 
 
     #______________________________________________________________________________
@@ -77,15 +76,16 @@ def pipe_preprocessing(s_w_r, pref_operation):
     #______________________________________________________________________________
     if s_w_r == True:
         df = df[df.STOP == False] #behält alle einträge im df wo Stop != True, also welche keine Stop-Words sind
-        print('Es wurde alle Stopwords entfernt. Dies Länge des Datenframes beträgt:', len(df))
-        print('_____________________________________________________________________')
+        #print('Es wurde alle Stopwords entfernt. Dies Länge des Datenframes beträgt:', len(df))
+        #print('_____________________________________________________________________')
 
 
 
 
     if s_w_r == False:
-        print('No stop word removal')
-        print('_____________________________________________________________________')
+        pass
+        #print('No stop word removal')
+        #print('_____________________________________________________________________')
 
 
 
@@ -96,13 +96,13 @@ def pipe_preprocessing(s_w_r, pref_operation):
     if pref_operation == 'l':
         lemm_list = df.Lemma.to_list()
         lemma_txt = ' '.join(lemm_list)
-        print(lemma_txt)
+        return lemma_txt
 
 
 
     if pref_operation == 's':
         stemm_list = df.Stemm.to_list()
         stemm_txt = ' '.join(stemm_list)
-        print(stemm_txt)
+        return stemm_txt
 
 
