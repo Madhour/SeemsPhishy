@@ -9,29 +9,42 @@
 
    </head>
    <body>
-      <header>{{ report_number }}</header>
-      <br><br><br>
-
 {# Loops through all generated text and creates cards #}
-<h1 style="text-align: center">Newsletter</h1>
+
+{# Logo here #}
+<p style="text-align:center;"><img src="/Users/ayman/Documents/DEV UNI/SeemsPhishy(DR)/SeemsPhishy/templates/Logo_big.png" width="200"/></p>
+<h1 style="text-align: center">Your Reading Digest</h1>
+<br>
 <div class="card-columns">
-   {% for message in newsletter: %}
+   <div style="margin: 0 auto;width:80%;">
+      <p >TOP STORIES FOR YOU</p>
+      {% set ns = namespace() %}
+      {% set ns.iter = 0 %}
+      {% for message in newsletter: %}
       
-      {# Loops through generated text for key/val #}
-      {% for key, value in message.items(): %}
-      <div class="card" style="margin: 0 auto;width:80%;">
-         <h5 class="card-header"><strong>{{ key }}</strong></h5>
-         <div class="card-body">
-            <p class="card-text">{{ value }}</p>
+         {# Loops through generated text for key/val #}
+         {% for key, value in message.items(): %}
+            <div class="card">
+               <div class="card-body">
+                  {# Author image, name & occupation#}
+                  <div style="float: left; padding-bottom: 20px;">
+                     <span style="float: left;padding-right: 10px;"><img src="/Users/ayman/Documents/DEV UNI/SeemsPhishy(DR)/SeemsPhishy/templates/faces/2_gan_face.jpg" class="rounded-circle" width="60"/></span>
+                     <span style="float: right; margin:10px"><p class="fw-light fst-italic"><strong>{{author_names[ns.iter]}}</strong>, Author of this article</p></span>
+                  </div>
 
+                  {# Newsletter Body #}
+                  <p style="float: left;" class="card-text">{{ value }}... <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Read More »</a></p>
+                  <br>
+               </div>
+            </div>
+            <br>
+         {% endfor %}
 
-               <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Read More »</a><br>
-         </div>
-      </div>
-      <br>
+         {# increase iteration of name #}
+         {% set ns.iter = ns.iter + 1 %}
+
       {% endfor %}
-   {% endfor %}
-</div>
+   </div>
 
 <br><br>
 
