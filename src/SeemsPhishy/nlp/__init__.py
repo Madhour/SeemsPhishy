@@ -25,9 +25,7 @@ if ner == True:
     for i in texte:
         entitys.append(named_entity_recoc(i))
 
-#if keyword == True:
-#    for i in texte:
-#        keywords.append(keywords_yake(i))
+
 
 for i in texte:
     pre_text = str(pipe_preprocessing(i, True, 'l'))
@@ -52,6 +50,10 @@ print(entitys)
 print("\n")
 print("\n")
 print(keywords)
+
+#for i in keywords:
+#    for ii in i:
+#        print(keywords[i[ii[1]]])
 
 
 
