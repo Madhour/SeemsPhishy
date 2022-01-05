@@ -3,6 +3,7 @@ import sqlalchemy
 import pandas as pd
 from src.SeemsPhishy.dataretrieval.enumeration import Enumeration
 from src.SeemsPhishy.dataretrieval.ocr import TextParser
+import nlp
 
 
 class Backend:
@@ -136,6 +137,7 @@ class Backend:
     def exec_information_gain(self, form_infos):
         self.log.info(f"Execute Information Gain Process")
         self.log.debug(f"Form: {form_infos}")
+        nlp.main()
         
         # Function(model_choice, text)
         # async call_data_keywords(form_infos, db_conncection)       # no return, # db status change define in funct
