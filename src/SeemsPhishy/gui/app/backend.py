@@ -145,7 +145,7 @@ class Backend:
 
 
         
-        nlp.main(texte, stop_word_remov=True, stemming_lemma='l', keyword=form_infos["keywords"], ner=form_infos["ner"], tf_idf=form_infos["tf_idf"])
+        nlp.main(texte, stop_word_remov=True, stemming_lemma='l', keyword=form_infos["keywords"], ner=form_infos["ner"], tf_idf_tf=form_infos["tf_idf"])
         
         # Function(model_choice, text)
         # async call_data_keywords(form_infos, db_conncection)       # no return, # db status change define in funct
