@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import random
 
-from lib.user_agents import user_agents
+from SeemsPhishy.dataretrieval.lib.user_agents import user_agents
 
 
 class Enumeration:

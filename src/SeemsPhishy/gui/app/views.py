@@ -1,6 +1,9 @@
 from flask import render_template, request, session
-from src.SeemsPhishy.gui.app import app
-from src.SeemsPhishy.gui.app.backend import Backend
+#from src.SeemsPhishy.gui.app import app
+from SeemsPhishy.gui.app import app
+#from src.SeemsPhishy.gui.app.backend import Backend
+from SeemsPhishy.gui.app.backend import Backend
+
 
 backend = Backend("debug")
 backend.connect()
@@ -119,14 +122,22 @@ def start_information_gain():
         inputs = dict(request.form)
         print(inputs)
         if "ner" not in inputs:
-            inputs["ner"] = 'off'
+            inputs["ner"] = False
+        else:
+            inputs["ner"] = True
 
         if "tf_idf" not in inputs:
-            inputs["tf_idf"] = 'off'
-        if "word2vec" not in inputs:
-            inputs["word2vec"] = 'off'
+            inputs["tf_idf"] = False
+        else:
+            inputs["tf_idf"] = True
+
+
+        if "keywords" not in inputs:
+            inputs["keywords"] = False
+        else:
+            inputs["keywords"] = True
         print(inputs)
-        backend.generate_text(inputs, type="email")
+        backend.exec_information_gain(inputs)
 
     return text_generation_1(send=True)
 
