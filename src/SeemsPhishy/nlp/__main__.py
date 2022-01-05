@@ -1,8 +1,10 @@
 from SeemsPhishy.nlp.preproc import pipe_preprocessing
-from SeemsPhishy.nlp.info import tf_idf
+#from SeemsPhishy.nlp.info import tf_idf
 from SeemsPhishy.nlp.info import named_entity_recoc
 from SeemsPhishy.nlp.info import keywords_yake
-from SeemsPhishy.nlp.info import sclean_tf_idf
+from SeemsPhishy.nlp.info import sklearn_tf_idf
+import spacy
+from SeemsPhishy.nlp.info import ner_bert
 
 
 #text = "This is an example text. It's purpose is to test this programm."
@@ -17,25 +19,48 @@ texte = ("Executive Summary: Apple Inc. is an information technology company wit
 #hier wird die Funktion....
 #stemming_lemma gibt an ob stemming oder lemmatisierung durchgeführt werden soll (mit jeweils 's' für stemming oder 'l' für lemmatisierung)
 
-def main(texte, stop_word_remov=True, stemming_lemma='l', keyword=True, ner=True, tf_idf_tf=False):
+def frosch(texte, stop_word_remov=True, stemming_lemma='l', keyword=True, ner=True, tf_idf_tf=False):
 
     pre_texte = []
     tf_idf_words = []
-    entitys = []
+    entities = []
     keywords = []
+
+
+    ####################### KEYWORDS WITH YAKE ############################
+
+    nlp = spacy.load("en_core_web_lg")
 
     if keyword == True:
         for text in texte:
-            keywords.append(keywords_yake(text))
+            words = []
+            words.append(keywords_yake(text))
+            for word in keywords_yake(text):
+                keywords.append(word)
+
+
+    
+
+
+    ####################### NER ############################
+
+    nlp = spacy.load("en_core_web_lg")
 
     if ner == True:
         for text in texte:
-            entitys.append(named_entity_recoc(text))
+            #entities.append(named_entity_recoc(text, nlp))
+            entities.append(ner_bert(text))
+
+
+        
+
+
+
 
 
 
     for text in texte:
-        pre_text = str(pipe_preprocessing(text, stop_word_remov, stemming_lemma))
+        pre_text = str(pipe_preprocessing(text, stop_word_remov, stemming_lemma, nlp))
         pre_texte.append(pre_text)
 
 
@@ -57,15 +82,16 @@ def main(texte, stop_word_remov=True, stemming_lemma='l', keyword=True, ner=True
     #        keywords.append(keywords_yake(text))
 
     #print(pre_texte)
-    print("\n")
-    print("\n")
-    print(entitys)
-    print("\n")
-    print("\n")
-    print(keywords)
-    print(sclean_tf_idf(pre_texte))
+    #print("\n")
+    #print("\n")
+    #print(entitys)
+    #print("\n")
+    #print("\n")
+    #print(keywords)
+    #print(sclean_tf_idf(pre_texte))
+    tf_idf_words = sklearn_tf_idf(pre_texte)
 
-    return keywords, pre_texte, entitys
+    return keywords, tf_idf_words, entities
 
     #for i in keywords:
     #    for ii in i:
@@ -74,6 +100,14 @@ def main(texte, stop_word_remov=True, stemming_lemma='l', keyword=True, ner=True
 
 
 
-main(texte)
+keywords, tf_idf_words, entities = frosch(texte)
 
+print(frosch(texte))
 
+#print("\n")
+#print("\n")
+#print(entities)
+#print("\n")
+#print("\n")
+#print(keywords)
+#print(tf_idf_words)

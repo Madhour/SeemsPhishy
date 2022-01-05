@@ -11,11 +11,14 @@ import glob
 import re
 from sklearn.feature_extraction.text import TfidfTransformer
 
+from transformers import AutoTokenizer, AutoModelForTokenClassification
+from transformers import pipeline
 
 
 
-def named_entity_recoc(text):
-        nlp = spacy.load("en_core_web_lg") 
+
+
+def named_entity_recoc(text, nlp):
         doc = nlp(text)
 
         return doc.ents
@@ -25,7 +28,7 @@ def named_entity_recoc(text):
 
 
 
-def tf_idf(texte):
+#def tf_idf(texte):
 
 #    def load_data(file):
 #        with open (file, "r", encoding="utf-8") as f:
@@ -66,69 +69,69 @@ def tf_idf(texte):
 #    # print (descriptions[0])
 #
 #    cleaned_docs = clean_docs(texte)
-    # print (cleaned_docs[0])
+#    # print (cleaned_docs[0])
+#
+#    vectorizer = TfidfVectorizer(
+#                                    lowercase=True,
+#                                    max_features=100,
+#                                    max_df=0.8,
+#                                    min_df=5,
+#                                    ngram_range = (1,3),
+#                                    stop_words = "english"
+#
+#                                )
+#
+#    vectors = vectorizer.fit_transform(texte)
+#
+#    feature_names = vectorizer.get_feature_names()
+#
+#    dense = vectors.todense()
+#    denselist = dense.tolist()
+#
+#    all_keywords = []
+#
+#    for description in denselist:
+#        x=0
+#        keywords = []
+#        for word in description:
+#            if word > 0:
+#                keywords.append(feature_names[x])
+#            x=x+1
+#        all_keywords.append(keywords)
+##    print (descriptions[0])
+#    print (all_keywords[0])
+#
+#    true_k = 1
+#
+#    model = KMeans(n_clusters=true_k, init="k-means++", max_iter=100, n_init=1)
+#
+#    model.fit(vectors)
+#
+#    order_centroids = model.cluster_centers_.argsort()[:, ::-1]
+#    terms = vectorizer.get_feature_names()
+#
+#    for i in range(true_k):
+#                print(f"Cluster {i}")
+#                print("\n")
+#                for ind in order_centroids[i, :10]:
+#                    print(' %s' % terms[ind],)
+#                    print("\n")
+#                print("\n")
+#                print("\n")
+#    
+#
+#    with open ("trc_results.txt", "w", encoding="utf-8") as f:
+#        for i in range(true_k):
+#            f.write(f"Cluster {i}")
+#            f.write("\n")
+#            for ind in order_centroids[i, :10]:
+#                f.write (' %s' % terms[ind],)
+#                f.write("\n")
+#            f.write("\n")
+#            f.write("\n")
 
-    vectorizer = TfidfVectorizer(
-                                    lowercase=True,
-                                    max_features=100,
-                                    max_df=0.8,
-                                    min_df=5,
-                                    ngram_range = (1,3),
-                                    stop_words = "english"
 
-                                )
-
-    vectors = vectorizer.fit_transform(texte)
-
-    feature_names = vectorizer.get_feature_names()
-
-    dense = vectors.todense()
-    denselist = dense.tolist()
-
-    all_keywords = []
-
-    for description in denselist:
-        x=0
-        keywords = []
-        for word in description:
-            if word > 0:
-                keywords.append(feature_names[x])
-            x=x+1
-        all_keywords.append(keywords)
-#    print (descriptions[0])
-    print (all_keywords[0])
-
-    true_k = 1
-
-    model = KMeans(n_clusters=true_k, init="k-means++", max_iter=100, n_init=1)
-
-    model.fit(vectors)
-
-    order_centroids = model.cluster_centers_.argsort()[:, ::-1]
-    terms = vectorizer.get_feature_names()
-
-    for i in range(true_k):
-                print(f"Cluster {i}")
-                print("\n")
-                for ind in order_centroids[i, :10]:
-                    print(' %s' % terms[ind],)
-                    print("\n")
-                print("\n")
-                print("\n")
-    
-
-    with open ("trc_results.txt", "w", encoding="utf-8") as f:
-        for i in range(true_k):
-            f.write(f"Cluster {i}")
-            f.write("\n")
-            for ind in order_centroids[i, :10]:
-                f.write (' %s' % terms[ind],)
-                f.write("\n")
-            f.write("\n")
-            f.write("\n")
-
-
-def sclean_tf_idf(dataset):
+def sklearn_tf_idf(dataset):
     tfIdfVectorizer=TfidfVectorizer(use_idf=True)
     tfIdf = tfIdfVectorizer.fit_transform(dataset)
     df = pd.DataFrame(tfIdf[0].T.todense(), index=tfIdfVectorizer.get_feature_names(), columns=["TF-IDF"])
@@ -148,4 +151,15 @@ def keywords_yake(text, language = "en", max_ngram_size = 3, deduplication_thres
     return keywords
     #for kw in keywords:
     #    print(kw)
+
+
+def ner_bert(text):
+    tokenizer = AutoTokenizer.from_pretrained("dslim/bert-base-NER")
+    model = AutoModelForTokenClassification.from_pretrained("dslim/bert-base-NER")
+
+    nlp = pipeline("ner", model=model, tokenizer=tokenizer)
+
+    ner_results = nlp(text)
+    return ner_results
+    #print(ner_results)
 

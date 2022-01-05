@@ -6,7 +6,7 @@ import pandas as pd
 from SeemsPhishy.dataretrieval.enumeration import Enumeration
 #from src.SeemsPhishy.dataretrieval.ocr import TextParser
 from SeemsPhishy.dataretrieval.ocr import TextParser
-import SeemsPhishy.nlp as nlp
+import SeemsPhishy.nlp.__main__ as __main__
 
 
 class Backend:
@@ -145,7 +145,7 @@ class Backend:
 
 
         
-        nlp.main(texte, stop_word_remov=True, stemming_lemma='l', keyword=form_infos["keywords"], ner=form_infos["ner"], tf_idf_tf=form_infos["tf_idf"])
+        __main__.main(texte, stop_word_remov=True, stemming_lemma='l', keyword=form_infos["keywords"], ner=form_infos["ner"], tf_idf_tf=form_infos["tf_idf"])
         
         # Function(model_choice, text)
         # async call_data_keywords(form_infos, db_conncection)       # no return, # db status change define in funct
