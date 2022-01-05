@@ -9,6 +9,7 @@ from nltk.corpus import stopwords
 import json
 import glob
 import re
+from sklearn.feature_extraction.text import TfidfTransformer
 
 
 
@@ -127,10 +128,19 @@ def tf_idf(texte):
             f.write("\n")
 
 
+def sclean_tf_idf(dataset):
+    tfIdfVectorizer=TfidfVectorizer(use_idf=True)
+    tfIdf = tfIdfVectorizer.fit_transform(dataset)
+    df = pd.DataFrame(tfIdf[0].T.todense(), index=tfIdfVectorizer.get_feature_names(), columns=["TF-IDF"])
+    df = df.sort_values('TF-IDF', ascending=False)
+    return df.head(25)
 
 
 
-def keywords_yake(text, language = "en", max_ngram_size = 3, deduplication_threshold = 0.9, numOfKeywords = 5):
+
+
+
+def keywords_yake(text, language = "en", max_ngram_size = 3, deduplication_threshold = 0.9, numOfKeywords = 1):
     #kw_extractor = yake.KeywordExtractor()
 
     custom_kw_extractor = yake.KeywordExtractor(lan=language, n=max_ngram_size, dedupLim=deduplication_threshold, top=numOfKeywords, features=None)
