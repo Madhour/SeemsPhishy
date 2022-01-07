@@ -49,7 +49,7 @@ def frosch(texte, stop_word_remov=True, stemming_lemma='l', keyword=True, ner=Tr
     if ner == True:
         for text in texte:
             #entities.append(named_entity_recoc(text, nlp))
-            entities.append(ner_bert(text))
+            entities.append(named_entity_recoc(text, nlp))
 
 
         
