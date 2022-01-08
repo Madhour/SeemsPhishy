@@ -1,7 +1,8 @@
 from SeemsPhishy.nlp.preproc import pipe_preprocessing
-from SeemsPhishy.nlp.info import tf_idf
+from SeemsPhishy.nlp.info import sklearn_tf_idf
 from SeemsPhishy.nlp.info import named_entity_recoc
 from SeemsPhishy.nlp.info import keywords_yake
+from sqlalchemy import text
 
 
 #text = "This is an example text. It's purpose is to test this programm."
@@ -16,37 +17,43 @@ from SeemsPhishy.nlp.info import keywords_yake
 #hier wird die Funktion....
 #stemming_lemma gibt an ob stemming oder lemmatisierung durchgeführt werden soll (mit jeweils 's' für stemming oder 'l' für lemmatisierung)
 
-def main(texte, stop_word_remov=True, stemming_lemma='l', keyword=True, ner=True, tf_idf=True):
+def main(conn, texte, stop_word_remov=True, stemming_lemma='l', keyword=True, ner=True, tf_idf=True):
 
     pre_texte = []
     tf_idf_words = []
     entitys = []
     keywords = []
 
-
     if ner == True:
-        for text in texte:
-            entitys.append(named_entity_recoc(text))
+        for key, text1 in texte.items():
+            current_entities = named_entity_recoc(text1)
+            entitys.append(current_entities)
+            for element in current_entities:
+                query_entity = f"INSERT INTO Keywords (n_file_id, s_keyword, s_tag) VALUES ({key}, '{element[0]}', 'NER');"
+                sql_query_df = text(query_entity)
+                conn.execute(sql_query_df)
 
-
-
-    for text in texte:
-        pre_text = str(pipe_preprocessing(text, stop_word_remov, stemming_lemma))
+    for key2, text2 in texte.items():
+        pre_text = str(pipe_preprocessing(text2, stop_word_remov, stemming_lemma))
         pre_texte.append(pre_text)
 
-
-
-
-
     if tf_idf == True:
-        tf_idf(pre_texte)
-        #tf_idf_words.append.keys
+        key_new = list(texte.keys())
+        sklearn_tf_idf(conn, key_new[0], pre_texte)
 
     if keyword == True:
-        for i in pre_texte:
-            keywords.append(keywords_yake(i))
+        key_new = list(texte.keys())
+        for text3 in pre_texte:
+            current_keywords = keywords_yake(text3)
+            keywords.append(current_keywords)
+            for element in current_keywords:
+                query_entity = f"INSERT INTO Keywords (n_file_id, s_keyword, s_tag) VALUES ({key_new[0]}, '{element[0]}', 'KEYWORDS');"
+                sql_query_df = text(query_entity)
+                conn.execute(sql_query_df)
+                print(element[0])
+            
 
-    print(pre_texte)
+    # print(pre_texte)
     print("\n")
     print("\n")
     print(entitys)

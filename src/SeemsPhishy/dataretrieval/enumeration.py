@@ -54,7 +54,9 @@ class Enumeration:
             url_header = {'User-Agent':random.choice(user_agents),  # Bing search engine requires user agent
                           'Accept-Language': 'en-US,en'}            # Receiving results in english unifies the scraping process
             
-            resp = requests.get(search_url, headers=url_header)
+            resp = requests.get(search_url, headers=url_header) # PDF-SEiten auslesen und > 150 rausnehmen
+
+            print(url_header)
 
             if resp.status_code == 200:
                 current_links = self.resultsParser(resp)

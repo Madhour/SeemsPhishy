@@ -103,14 +103,28 @@ def not_found(e):
 def add_new_entity():
     if request.method == 'POST':
         inputs = dict(request.form)
-
+        print(inputs)
         if "ner" not in inputs:
-            inputs["ner"] = 'off'
+            inputs["ner"] = False
+        else:
+            inputs["ner"] = True
 
         if "tf_idf" not in inputs:
-            inputs["tf_idf"] = 'off'
-        if "word2vec" not in inputs:
-            inputs["word2vec"] = 'off'
+            inputs["tf_idf"] = False
+        else:
+            inputs["tf_idf"] = True
+
+        if "keywords" not in inputs:
+            inputs["keywords"] = False
+        else:
+            inputs["keywords"] = True
+
+        if "stop_words" not in inputs:
+            inputs["stop_words"] = False
+        else:
+            inputs["stop_words"] = True
+
+        print(inputs)
 
         backend.new_entity(inputs)
     return datasets(send=True)
@@ -136,6 +150,12 @@ def start_information_gain():
             inputs["keywords"] = False
         else:
             inputs["keywords"] = True
+
+        if "stop_words" not in inputs:
+            inputs["stop_words"] = False
+        else:
+            inputs["stop_words"] = True
+        
         print(inputs)
         backend.exec_information_gain(inputs)
 
@@ -186,6 +206,7 @@ def text_result():
     print(text_gen_infos)
     if text_gen_infos is not None:
         inputs = text_gen_infos | dict(request.form)        # needs python 3.9 or higher (joins two dicts together)
+        inputs = {**text_gen_infos, **dict(request.form)}
     else:
         inputs = dict(request.form)
     backend.generate_text(inputs)
