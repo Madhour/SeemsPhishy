@@ -178,13 +178,19 @@ def text_gen_choose_keywords():
     if request.method == 'POST':
         inputs = dict(request.form)
         if "ner" not in inputs:
-            inputs["ner"] = 'off'
+            inputs["ner"] = False
+        else:
+            inputs["ner"] = True
+        
         if "tf_idf" not in inputs:
-            inputs["tf_idf"] = 'off'
-        if "word2vec" not in inputs:
-            inputs["word2vec"] = 'off'
-        if "reco_keywords" not in inputs:
-            inputs["reco_keywords"] = 'off'
+            inputs["tf_idf"] = False
+        else:
+            inputs["tf_idf"] = True
+            
+        if "keywords" not in inputs:
+            inputs["keywords"] = False
+        else:
+            inputs["keywords"] = True
 
         print(inputs)
 
@@ -192,24 +198,21 @@ def text_gen_choose_keywords():
         global text_gen_infos
         text_gen_infos = inputs
 
-    entities = backend.get_entity_names().entity.values.tolist()
-    values = backend.get_entity_names().id.values.tolist()
-    if inputs["reco_keywords"] == "off":
-        return render_template("/text_generation_2.html", entities=entities, values=values, zip=zip, send=False)
-    else:
-        return text_result()
+    # entities = backend.get_entity_names().entity.values.tolist()
+    # values = backend.get_entity_names().id.values.tolist()
+    keywords = backend.get_keywords_textgen(inputs["entity_id"], inputs["ner"], inputs["tf_idf"], inputs["keywords"])
+    print(keywords)
+    return render_template("/text_generation_2.html", keywords=keywords.s_keyword.values.tolist(), ids=keywords.n_keyword_id.values.tolist(), zip=zip, send=False)
 
 
 @app.route('/text_result', methods=['POST', 'GET'])
 def text_result():
     global text_gen_infos
     print(text_gen_infos)
-    if text_gen_infos is not None:
-        inputs = text_gen_infos | dict(request.form)        # needs python 3.9 or higher (joins two dicts together)
-        inputs = {**text_gen_infos, **dict(request.form)}
-    else:
-        inputs = dict(request.form)
-    backend.generate_text(inputs)
+    # inputs = text_gen_infos | dict(request.form)        # needs python 3.9 or higher (joins two dicts together)
+    # inputs = {**text_gen_infos, **dict(request.form)}
+    keyword_list = request.form.getlist("list_keywords")
+    generated_text = backend.generate_text(text_gen_infos, keyword_list)
 
     # TODO display result
-    return render_template("/text_generation_result.html")
+    return render_template("/text_generation_result.html", generated_text=generated_text)

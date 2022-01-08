@@ -56,14 +56,22 @@ class Backend:
         return no_file, no_keywords, no_texts
 
     def list_entities(self):
+        # s_query = """
+        # SELECT s.s_name AS entity, s.n_status AS status, 
+        # b_ner as NER, b_tfidf as tfidf, b_word2vec as yake_keywords,
+        # count(distinct d.n_file_id) as files, count(distinct k.s_keyword) as keywords
+        # FROM SearchedEntities s 
+        #     INNER JOIN datafiles d on S.n_entity_id = d.n_entity_id
+        #     INNER JOIN keywords k on d.n_file_id = k.n_file_id
+        # GROUP BY s.s_name, S.n_status, b_ner, b_tfidf, b_word2vec
+        # """
+
         s_query = """
         SELECT s.s_name AS entity, s.n_status AS status, 
-        b_ner as NER, b_tfidf as tfidf, b_word2vec as word2vec,
-        count(d.n_file_id) as files, count(distinct k.s_keyword) as keywords
+        b_ner as NER, b_tfidf as tfidf, b_word2vec as yake_keywords, count(distinct d.n_file_id) as files
         FROM SearchedEntities s 
             INNER JOIN datafiles d on S.n_entity_id = d.n_entity_id
-            INNER JOIN keywords k on d.n_file_id = k.n_file_id
-        GROUP BY s.s_name, S.n_status, b_ner, b_tfidf, b_word2vec
+        GROUP BY s.s_name, s.n_status, b_ner, b_tfidf, b_word2vec
         """
         df = pd.read_sql_query(s_query, self.alchemy_connection)
         return df
@@ -117,6 +125,31 @@ class Backend:
         INNER JOIN datafiles d on k.n_file_id = d.n_file_id
         INNER JOIN searchedentities s on s.n_entity_id = d.n_entity_id
         WHERE s.n_entity_id = {int(entity_id)}
+                        """
+        df = pd.read_sql_query(s_query, self.alchemy_connection)
+        return df
+
+    def get_keywords_textgen(self, entity_id, ner, tf_idf, keywords):
+        tag_list = []
+        if ner:
+            tag_list.append("NER")
+        else:
+            tag_list.append("None")
+        if tf_idf:
+            tag_list.append("TFIDF")
+        else:
+            tag_list.append("None")
+        if keywords:
+            tag_list.append("KEYWORDS")
+        else:
+            tag_list.append("None")
+
+        s_query = f"""
+        SELECT k.s_keyword, k.n_keyword_id
+        FROM keywords k
+        INNER JOIN datafiles d on k.n_file_id = d.n_file_id
+        INNER JOIN searchedentities s on s.n_entity_id = d.n_entity_id
+        WHERE s.n_entity_id = {int(entity_id)} AND k.s_tag IN ('{tag_list[0]}','{tag_list[1]}','{tag_list[2]}')
                         """
         df = pd.read_sql_query(s_query, self.alchemy_connection)
         return df
@@ -220,22 +253,23 @@ class Backend:
 
         return True
 
-    def generate_text(self, form_infos):
+    def generate_text(self, form_infos, keyword_infos):
         # User chooses keywords
         self.log.info(f"Execute Textgeneration")
         self.log.debug(f"Form: {form_infos}")
+        self.log.debug(f"Form: {keyword_infos}")
 
         print("TEXT GEN FORM:")
-        entity_name = form_infos["custom_name"]
+        n_entity_id = form_infos["entity_id"]
 
-        query_keywords = f"SELECT s_keyword FROM Keywords JOIN DataFiles ON Keywords.n_file_id = DataFiles.n_file_id JOIN SearchedEntities ON DataFiles.n_entity_id = SearchedEntities.n_entity_id WHERE SearchedEntities.s_name = '{entity_name}';"
+        query_keywords = f"SELECT s_keyword FROM Keywords JOIN DataFiles ON Keywords.n_file_id = DataFiles.n_file_id JOIN SearchedEntities ON DataFiles.n_entity_id = SearchedEntities.n_entity_id WHERE SearchedEntities.s_name = '{n_entity_id}';"
         keywords_df = pd.read_sql_query(query_keywords, self.alchemy_connection)
 
         print(keywords_df)
 
         # if type == "mail":
         # async generate_mail(form_infos, db_conncection)       # no return, # db status change define in funct
-        return True # return rendered newsletter template
+        return "Lukas stinkt" # return rendered newsletter template
 
     ################################################################################
 

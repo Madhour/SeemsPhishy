@@ -19,11 +19,9 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Keys</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" multiple aria-label="multiple select example"
-                                            name="list_keywords">
-                                        <option value="-1">Choose Keywords</option>
-                                        {% for keyword, id in zip(keywords, ids) %}     <!-- wie hier die keywords des gewählten tags der gewählten entity? -->
-                                        <option value="{{ id }}">{{keyword}}</option>
+                                    <select class="form-select" name="list_keywords" multiple>
+                                        {% for keyword, id in zip(keywords, ids) %}
+                                        <option value="{{ keyword }}">{{keyword}}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
