@@ -3,6 +3,7 @@ from SeemsPhishy.nlp.info import sklearn_tf_idf
 from SeemsPhishy.nlp.info import named_entity_recoc
 from SeemsPhishy.nlp.info import keywords_yake
 from sqlalchemy import text
+import spacy
 
 
 #text = "This is an example text. It's purpose is to test this programm."
@@ -34,7 +35,8 @@ def main(conn, texte, stop_word_remov=True, stemming_lemma='l', keyword=True, ne
                 conn.execute(sql_query_df)
 
     for key2, text2 in texte.items():
-        pre_text = str(pipe_preprocessing(text2, stop_word_remov, stemming_lemma))
+        nlp = spacy.load("en_core_web_sm")
+        pre_text = str(pipe_preprocessing(text2, stop_word_remov, stemming_lemma, nlp))
         pre_texte.append(pre_text)
 
     if tf_idf == True:
