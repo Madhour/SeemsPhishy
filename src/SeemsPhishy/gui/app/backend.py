@@ -7,12 +7,8 @@ import pandas as pd
 from SeemsPhishy.dataretrieval.enumeration import Enumeration
 #from src.SeemsPhishy.dataretrieval.ocr import TextParser
 from SeemsPhishy.dataretrieval.ocr import TextParser
-<<<<<<< HEAD
 import SeemsPhishy.nlp.__main__ as nlp
 import time, datetime
-=======
-import SeemsPhishy.nlp.__main__ as __main__
->>>>>>> ea8345e6ab4ffd8f1461f76bdacc92f308c38f96
 
 
 class Backend:
@@ -251,17 +247,10 @@ class Backend:
         for index, row in texts.iterrows():
             texts_dict[row["n_file_id"]] = row["s_text"]
         
-<<<<<<< HEAD
         nlp.main(self.alchemy_connection, texts_dict, stop_word_remov=form_infos["stop_words"], stemming_lemma=form_infos["lemma_stemm"], keyword=form_infos["keywords"], ner=form_infos["ner"], tf_idf=form_infos["tf_idf"]) # keyword Parameter noch mit GUI anpassen
 
         print(self.get_table("Keywords"))
 
-=======
-        __main__.main(texte, stop_word_remov=True, stemming_lemma='l', keyword=form_infos["keywords"], ner=form_infos["ner"], tf_idf_tf=form_infos["tf_idf"])
-        
-        # Function(model_choice, text)
-        # async call_data_keywords(form_infos, db_conncection)       # no return, # db status change define in funct
->>>>>>> ea8345e6ab4ffd8f1461f76bdacc92f308c38f96
         return True
 
     def generate_text(self, form_infos, keyword_infos):
