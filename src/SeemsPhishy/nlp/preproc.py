@@ -1,14 +1,9 @@
+import spacy
+from nltk.stem import PorterStemmer
+import pandas as pd
 
 
-def pipe_preprocessing(text, s_w_r, pref_operation):
-
-    #notwendigen Module
-    import spacy
-    from nltk.stem import PorterStemmer
-    import pandas as pd
-    from nltk.stem import PorterStemmer
-
-
+def pipe_preprocessing(text, s_w_r, pref_operation, nlp):
 
 
 
@@ -16,7 +11,7 @@ def pipe_preprocessing(text, s_w_r, pref_operation):
     #with open(textdatei,encoding="utf8") as f:
     contents = text
     corpus = contents
-    nlp = spacy.load("en_core_web_sm")
+    #nlp = spacy.load("en_core_web_sm")
     doc = nlp(corpus)
 
 
