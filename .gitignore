@@ -134,3 +134,4 @@ dmypy.json
 /.idea/vcs.xml
 .DS_Store
 SeemsPhishy/newsletters/
+finetuning/*
