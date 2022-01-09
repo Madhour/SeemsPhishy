@@ -57,9 +57,9 @@ def buildMail(text, organization):
     report_number = int(time.time())
     names = random.sample(random_names, (len(text[0].items())))
 
-    template = Template(open('SeemsPhishy/templates/phishing_tpl.html').read()) # HTML Template stored inside /lib/
+    template = Template(open('./templates/phishing_tpl.html').read()) # HTML Template stored inside /lib/
     tpl = template.render(newsletter = text, report_number = report_number, author_names = names)
     #html = open(f'./SeemsPhishy/newsletters/Newsletter-{organization}-{report_number}.html', 'w') #stores rendered report as HTML file
-    html = open(f'./SeemsPhishy/newsletters/Newsletter-{organization}.html', 'w') #stores rendered report as HTML file
+    html = open(f'./newsletters/Newsletter-{organization}.html', 'w') #stores rendered report as HTML file
     html.write(tpl)
     html.close()

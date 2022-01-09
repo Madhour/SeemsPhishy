@@ -1,8 +1,8 @@
 from sys import exit
 import argparse
 
-from enumeration import ENUMERATION
-from textgen import generate2, buildMail
+#from enumeration import ENUMERATION
+from textgen import generate, buildMail
 
 seemsphishy = """
 
@@ -26,20 +26,15 @@ if __name__ == "__main__":
  
 	#arguments
 	args = argparse.ArgumentParser(description="Main", formatter_class=argparse.RawTextHelpFormatter, usage=argparse.SUPPRESS)
-	args.add_argument("-e", "--enumerate", dest="enumeration", type=str, help="Target company name for enumeration", required=False)
-	args.add_argument("-g", "--generate", dest="generate", type=str, help="Strings to generate text from", required=False)
+	args.add_argument("-g", "--generate", dest="generate", type=str, help="Keywords to generate text", required=False)
 	args = args.parse_args()
 	#argument handler
 	try:
-		#enumeration
-		if args.enumeration:
-			company_enum = ENUMERATION(args.enumeration)
-			results = company_enum.getFiles()
 
 		if args.generate:
-			text = generate2(args.generate)
+			text = generate(args.generate) #keywords: "keyword1,keyword2,keyword3" all without spaces!
 			print(text)
-			buildMail(text, "TestCorp.")
+			buildMail(text, "TestCorp.") # pass generated text and Organization name
 
 			
    
