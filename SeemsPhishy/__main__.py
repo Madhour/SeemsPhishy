@@ -2,7 +2,7 @@ from sys import exit
 import argparse
 
 from enumeration import ENUMERATION
-from textgen import generate, buildMail
+from textgen import generate2, buildMail
 
 seemsphishy = """
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
 			results = company_enum.getFiles()
 
 		if args.generate:
-			text = generate(args.generate)
+			text = generate2(args.generate)
 			print(text)
 			buildMail(text, "TestCorp.")
 

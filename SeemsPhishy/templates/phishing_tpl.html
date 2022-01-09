@@ -27,8 +27,9 @@
             <div class="card">
                <div class="card-body">
                   {# Author image, name & occupation#}
-                  <div style="float: left; padding-bottom: 20px;">
-                     <span style="float: left;padding-right: 10px;"><img src="/Users/ayman/Documents/DEV UNI/SeemsPhishy(DR)/SeemsPhishy/templates/faces/2_gan_face.jpg" class="rounded-circle" width="60"/></span>
+                  <h5 style="float: left; padding-bottom: 20px;" class="card-title">{{key}}?</h5>
+                  <div style="float: left; padding-bottom: 20px;clear: left;">
+                     <span style="float: left;padding-right: 10px;"><img src="/Users/ayman/Documents/DEV UNI/SeemsPhishy(DR)/SeemsPhishy/templates/faces/{{ns.iter}}_gan_face.jpg" class="rounded-circle" width="60"/></span>
                      <span style="float: right; margin:10px"><p class="fw-light fst-italic"><strong>{{author_names[ns.iter]}}</strong>, Author of this article</p></span>
                   </div>
 
@@ -38,10 +39,10 @@
                </div>
             </div>
             <br>
+            {% set ns.iter = ns.iter + 1 %}
          {% endfor %}
 
          {# increase iteration of name #}
-         {% set ns.iter = ns.iter + 1 %}
 
       {% endfor %}
    </div>
