@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+      <title>SeemsPhishy</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+   
+
+   </head>
+   <body>
+{# Loops through all generated text and creates cards #}
+
+{# Logo here #}
+<p style="text-align:center;"><img src="/Users/ayman/Documents/DEV UNI/SeemsPhishy(DR)/SeemsPhishy/templates/Logo_big.png" width="200"/></p>
+<h1 style="text-align: center">Your Reading Digest</h1>
+<br>
+<div class="card-columns">
+   <div style="margin: 0 auto;width:80%;">
+      <p >TOP STORIES FOR YOU</p>
+      {% set ns = namespace() %}
+      {% set ns.iter = 0 %}
+      {% for message in newsletter: %}
+      
+         {# Loops through generated text for key/val #}
+         {% for key, value in message.items(): %}
+            <div class="card">
+               <div class="card-body">
+                  {# Author image, name & occupation#}
+                  <h5 style="float: left; padding-bottom: 20px;" class="card-title">{{key}}?</h5>
+                  <div style="float: left; padding-bottom: 20px;clear: left;">
+                     <span style="float: left;padding-right: 10px;"><img src="/Users/ayman/Documents/DEV UNI/SeemsPhishy(DR)/SeemsPhishy/templates/faces/{{ns.iter}}_gan_face.jpg" class="rounded-circle" width="60"/></span>
+                     <span style="float: right; margin:10px"><p class="fw-light fst-italic"><strong>{{author_names[ns.iter]}}</strong>, Author of this article</p></span>
+                  </div>
+
+                  {# Newsletter Body #}
+                  <p style="float: left;" class="card-text">{{ value }}... <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Read More »</a></p>
+                  <br>
+               </div>
+            </div>
+            <br>
+            {% set ns.iter = ns.iter + 1 %}
+         {% endfor %}
+
+         {# increase iteration of name #}
+
+      {% endfor %}
+   </div>
+
+<br><br>
+
+
+      <div class="container">
+         <p>SeemsPhishy</p>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+   </body>
+</html>
