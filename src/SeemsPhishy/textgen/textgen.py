@@ -2,7 +2,7 @@ from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM, AutoConf
 from jinja2 import *
 from torch import tensor, device
 import time
-import random
+import random 
 
 random_names = (
 "Oskar Al-Ghazzawi",

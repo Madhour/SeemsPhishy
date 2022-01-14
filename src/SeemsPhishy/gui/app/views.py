@@ -3,7 +3,8 @@ from flask import render_template, request, session
 from SeemsPhishy.gui.app import app
 #from src.SeemsPhishy.gui.app.backend import Backend
 from SeemsPhishy.gui.app.backend import Backend
-
+import time
+import random
 
 backend = Backend("debug")
 backend.connect()
@@ -205,14 +206,105 @@ def text_gen_choose_keywords():
     return render_template("/text_generation_2.html", keywords=keywords.s_keyword.values.tolist(), ids=keywords.n_keyword_id.values.tolist(), zip=zip, send=False)
 
 
+@app.route('/textgeneration/display')
+def textgen_display():
+    entities = backend.get_entity_names().entity.values.tolist()
+    values = backend.get_entity_names().id.values.tolist()
+    return render_template("/textgeneration_select.html", entities=entities, values=values, zip=zip)
+
+
+
 @app.route('/text_result', methods=['POST', 'GET'])
 def text_result():
     global text_gen_infos
     print(text_gen_infos)
-    # inputs = text_gen_infos | dict(request.form)        # needs python 3.9 or higher (joins two dicts together)
-    # inputs = {**text_gen_infos, **dict(request.form)}
+    
     keyword_list = request.form.getlist("list_keywords")
     generated_text = backend.generate_text(text_gen_infos, keyword_list)
 
     # TODO display result
-    return render_template("/text_generation_result.html", generated_text=generated_text)
+    # return render_template("/text_generation_result.html", generated_text=generated_text)
+    random_names = (
+    "Oskar Al-Ghazzawi",
+    "Adzo Snider",
+    "Georgios Yun",
+    "Askr Ogtrop",
+    "Winfrith McNeal",
+    "Sven Bieber")
+    report_number = int(time.time())
+    names = random.sample(random_names, (len(generated_text[0].items())))
+    return render_template("/text_generation_result.html", newsletter = generated_text, report_number = report_number, author_names = names, phish_link = text_gen_infos["url"])
+
+
+@app.route('/textgen_results', methods=['POST', 'GET'])
+def textgen_results():
+    global text_gen_infos
+    print(text_gen_infos)
+
+    inputs = dict(request.form)
+    entity_id = inputs["entity_id"]
+
+    generated_text_dict_dumps = backend.get_generated_Text(entity_id)
+
+    url = str(generated_text_dict_dumps["s_link"].iloc[-1])
+
+    generated_text_dict_dumps = str(generated_text_dict_dumps["s_message"].iloc[-1])
+    print("AAAAAAAAAA")
+    print(generated_text_dict_dumps)
+
+    generated_text_dict_dumps.replace('{','')
+    generated_text_dict_dumps.replace('}','')
+
+    parts = generated_text_dict_dumps.split(",")
+
+    print("BBBBBBBBBBBBBBBB")
+    print(parts)
+    
+    textgen_dict = {}
+    generated_text = []
+
+    qa = []
+
+    last_index = 0
+
+    for counter in range(0,len(parts)):
+        if ":" in parts[counter]:
+            if "{" in parts[counter]:
+                parts[counter] = parts[counter].replace("{","")
+            if "}" in parts[counter]:
+                parts[counter] = parts[counter].replace('}','')
+            last_index = counter
+            qa = parts[counter].split(":")
+            print("F u A")
+            print(qa)
+            textgen_dict[qa[0]] = qa[1]
+        else:
+            if "{" in parts[counter]:
+                parts[counter] = parts[counter].replace("{","")
+            if "}" in parts[counter]:
+                parts[counter] = parts[counter].replace('}','')
+            element = parts[last_index]
+            new = element.split(":")
+            answer = new[1]
+            new_answer = answer + "," + parts[counter]
+            textgen_dict[new[0]] = new_answer
+
+        
+    print("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
+    print(textgen_dict)
+    generated_text.append(textgen_dict.copy())
+    print(generated_text)
+
+    random_names = (
+    "Oskar Al-Ghazzawi",
+    "Adzo Snider",
+    "Georgios Yun",
+    "Askr Ogtrop",
+    "Winfrith McNeal",
+    "Sven Bieber",
+    "Lukas Benner",
+    "Marius Kiskemper")
+    report_number = int(time.time())
+    names = random.sample(random_names, (len(generated_text[0].items())))
+
+    return render_template("/text_generation_result.html", newsletter = generated_text, report_number = report_number, author_names = names, phish_link = url)

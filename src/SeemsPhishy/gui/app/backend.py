@@ -9,6 +9,9 @@ from SeemsPhishy.dataretrieval.enumeration import Enumeration
 from SeemsPhishy.dataretrieval.ocr import TextParser
 import SeemsPhishy.nlp.__main__ as nlp
 import time, datetime
+import json
+
+from SeemsPhishy.textgen import textgen
 
 
 class Backend:
@@ -166,6 +169,11 @@ class Backend:
         query = f"SELECT * FROM {table_name}"
         df = pd.read_sql_query(query, self.alchemy_connection)
         return df
+
+    def get_generated_Text(self, entity_id):
+        query_texts = f"SELECT s_message, s_link FROM TextsGen WHERE n_entity_id = '{entity_id}';"
+        generated_text = pd.read_sql_query(query_texts, self.alchemy_connection)
+        return generated_text
     
     def new_entity(self, form_infos):
         self.log.info(f"Add new entity")
@@ -194,7 +202,7 @@ class Backend:
         if results:
             print("Dictionary is not empty!")
         else:
-            print("Dictionary is empty!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("Dictionary is empty!")
             print("TRY AGAIN WITH ANOTHER ENTITY NAME")
 
         corpus = TextParser(results).convertFiles(form_infos["number_of_results"])
@@ -259,17 +267,44 @@ class Backend:
         self.log.debug(f"Form: {form_infos}")
         self.log.debug(f"Form: {keyword_infos}")
 
-        print("TEXT GEN FORM:")
+        keywords = ",".join(keyword_infos)
+
+        generated = textgen.generate(keywords)
+
         n_entity_id = form_infos["entity_id"]
 
-        query_keywords = f"SELECT s_keyword FROM Keywords JOIN DataFiles ON Keywords.n_file_id = DataFiles.n_file_id JOIN SearchedEntities ON DataFiles.n_entity_id = SearchedEntities.n_entity_id WHERE SearchedEntities.s_name = '{n_entity_id}';"
-        keywords_df = pd.read_sql_query(query_keywords, self.alchemy_connection)
+        generated_text_dict = {}
 
-        print(keywords_df)
+        dictionary = generated[0]
 
-        # if type == "mail":
-        # async generate_mail(form_infos, db_conncection)       # no return, # db status change define in funct
-        return "Lukas stinkt" # return rendered newsletter template
+        for key,element in dictionary.items():
+            key_replaced = key.replace("'","")
+            element_replaced = element.replace("'","")
+            generated_text_dict[key_replaced] = element_replaced
+
+        generated_text= json.dumps(dict(generated_text_dict))
+
+        print(generated_text)
+
+        key
+
+        current_timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+        query_df = f"INSERT INTO TextsGen (n_entity_id, n_status, s_text_type, s_message, s_meta_info, s_link, ts_generated) VALUES ({n_entity_id}, 0, 'Newsletter', '{generated_text}', '{keywords}', '{form_infos['url']}', '{current_timestamp}');"
+        sql_query_df = text(query_df)
+        self.alchemy_connection.execute(sql_query_df)
+        
+        query_update = f"UPDATE SearchedEntities SET n_status = 0 WHERE n_entity_id = {n_entity_id};"
+        sql_query_update = text(query_update)
+        self.alchemy_connection.execute(sql_query_update)
+
+        query_texts = f"SELECT * FROM TextsGen;"
+        results_1 = pd.read_sql_query(query_texts, self.alchemy_connection)
+        print(results_1)
+        query_texts = f"SELECT s_text,n_file_id FROM DataFiles WHERE n_entity_id = '{n_entity_id[0][0]}';"
+        results_2 = pd.read_sql_query(query_texts, self.alchemy_connection)
+        print(results_2)
+
+        return generated # return rendered newsletter template
 
     ################################################################################
 

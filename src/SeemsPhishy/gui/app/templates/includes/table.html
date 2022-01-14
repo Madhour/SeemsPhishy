@@ -21,7 +21,7 @@
             {% endif %}
         {% elif col == "url" %}
             <td><a href="{{cell}}" target="_blank">{{cell}}</a></td>
-        {% elif col in ["ner", "tfidf", "word2vec"] %}
+        {% elif col in ["ner", "tfidf", "yake_keywords"] %}
             {% if cell %}
                 <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"> Done</i></span></td>
             {% else %}
