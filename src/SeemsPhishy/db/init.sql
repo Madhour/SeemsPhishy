@@ -53,9 +53,9 @@ CREATE TABLE Keywords
 (
     n_keyword_id     SERIAL UNIQUE NOT NULL,
     n_file_id        INT           NOT NULL,
-    s_keyword        VARCHAR(4096),           -- wird iwie nicht übernommen
+    s_keyword        VARCHAR(4096),
     s_tag            VARCHAR(4096) NOT NULL,
-    n_no_occurancies INT DEFAULT 1,
+    n_no_occurrences INT DEFAULT 1,
     PRIMARY KEY (n_keyword_id),
     FOREIGN KEY (n_file_id) REFERENCES DataFiles (n_file_id)
 

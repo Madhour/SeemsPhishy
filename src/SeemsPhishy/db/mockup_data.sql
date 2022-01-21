@@ -17,7 +17,7 @@ VALUES
        (1 ,0, 'https://www.ibm.com/annualreport/assets/downloads/IBM_Annual_Report_2018.pdf' ,'Microsoft-PDF'),
        (2 ,0, 'https://www.ibm.com/annualreport/assets/downloads/IBM_Annual_Report_2018.pdf' ,'HelloFresh-PDF');
 
-INSERT INTO Keywords (n_file_id, s_keyword, s_tag, n_no_occurcances)
+INSERT INTO Keywords (n_file_id, s_keyword, s_tag, n_no_occurrences)
 VALUES
        (3 ,'Manhattan', 'City', 3),
        (2 ,'New York', 'City', 4),

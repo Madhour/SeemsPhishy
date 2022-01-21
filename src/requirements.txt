@@ -1,0 +1,16 @@
+flask
+pandas
+sqlalchemy
+pdfminer
+# psycopg2
+spacy       # plus do following: python -m spacy load en_core_web_lg
+yake
+nltk
+beautifulsoup4
+huggingface-hub
+numpy
+torch
+sklearn
+lxml
+# requests
+

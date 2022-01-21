@@ -19,25 +19,25 @@ seemsphishy = """
                          
 """
 
-
 if __name__ == "__main__":
-	#ascii-art
-	print(seemsphishy)
- 
-	#arguments
-	#takes organization name and returns dict-object with title-text
-	args = argparse.ArgumentParser(description="Main", formatter_class=argparse.RawTextHelpFormatter, usage=argparse.SUPPRESS)
-	args.add_argument("-e", "--enumerate", dest="enumeration", type=str, help="Target company name for enumeration", required=True)
-	args = args.parse_args()
-	#argument handler
-	try:
-		#enumeration
-		if args.enumeration:
-			company_enum = Enumeration(args.enumeration)
-			results = company_enum.getFiles()
-			print(TextParser(results).convertFiles())
+    # ascii-art
+    print(seemsphishy)
 
-   
-	except KeyboardInterrupt:
-		print("[MAIN] Closing...")
-		exit(0)
+    # argument
+    # takes organization name and returns dict-object with title-text
+    args = argparse.ArgumentParser(description="Main", formatter_class=argparse.RawTextHelpFormatter,
+                                   usage=argparse.SUPPRESS)
+    args.add_argument("-e", "--enumerate", dest="enumeration", type=str, help="Target company name for enumeration",
+                      required=True)
+    args = args.parse_args()
+    # argument handler
+    try:
+        # enumeration
+        if args.enumeration:
+            company_enum = Enumeration(args.enumeration)
+            results = company_enum.get_files()
+            print(TextParser(results).convert_files())
+
+    except KeyboardInterrupt:
+        print("[MAIN] Closing...")
+        exit(0)
