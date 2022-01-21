@@ -33,8 +33,6 @@ class TextParser:
         return self.text
 
     def text_parser(self, pdf_path, filename):
-        print(pdf_path)
-        print(filename)
         # Part 1 (extract text from file)
         resource_manager = PDFResourceManager(caching=True)
         out_text = StringIO()
@@ -57,12 +55,12 @@ class TextParser:
 
         self.text[filename] = text
 
-        # Part 2 (Create .txt file and save the text from part 1
+        # Part 2 (Create .txt file and save the text from part 1)
         # file = open(name_txt_file + '.txt', "w", encoding = "utf-8")
         # file.write(text)
         # file.close()
 
-    def slugify(value, allow_unicode=False):
+    def slugify(self, value, allow_unicode=False):
         value = str(value)
         if allow_unicode:
             value = unicodedata.normalize('NFKC', value)
@@ -74,15 +72,21 @@ class TextParser:
     def download_pdf(self, url_name, filename):
         full_filename = filename
         filename = filename[:25].replace(" ", "_")
-        slugified = self.slugify(filename)
+        slugified = self.slugify(filename) #  clean up the title, otherwise a slash is interpreted as subfolder
         filepath = f"src/SeemsPhishy/dataretrieval/lib/PDF/{slugified}.pdf"
         response = requests.get(url_name)
         print(filename)
         print(slugified)
         file = open(filepath, "wb")
-        print(file)
         file.write(response.content)
         file.close()
-        # convert2text
+        
+        # convert the pdf to clear text
         self.text_parser(filepath, full_filename)
         # os.remove(filepath)
+
+
+if __name__ == "__main__":
+    # for debugging only
+    text = TextParser({"protiviti new interns guide":"https://jcu.edu/sites/default/files/2019-10/Protiviti%20Intern%20-%202019%20-%20FINAL.pdf"}).convert_files(1)
+    print(text)
