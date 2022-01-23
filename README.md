@@ -1,32 +1,37 @@
 <div align="center">
 <h2>SeemsPhishy</h2>
-<img src="src/SeemsPhishy/gui/app/static/assets/img/Logo_big.png" alt="Logo" width="180" align="center"/>
-<br><br>
+
+<img src="doc/logo.png" alt="Logo" width="210" align="center"/>
+<br>
+<img src="https://img.shields.io/badge/postgresql-grey?style=flat-square&logo=postgresql"/>
+<img src="https://img.shields.io/badge/docker-grey?style=flat-square&logo=docker"/>
+<img src="https://img.shields.io/badge/flask-grey?style=flat-square&logo=flask"/>
+<img src="https://img.shields.io/badge/python-grey?style=flat-square&logo=python"/>
+<img src="https://img.shields.io/badge/PyTorch-grey?style=flat-square&logo=PyTorch"/>
+<img src="https://img.shields.io/badge/scikit-learn-grey?style=flat-square&logo=scikit-learn"/>
+<img src="https://img.shields.io/badge/bootstrap-grey?style=flat-square&logo=bootstrap"/>
+<img src="https://img.shields.io/badge/html5-grey?style=flat-square&logo=html5"/>
+<img src="https://img.shields.io/badge/css3-grey?style=flat-square&logo=css3"/>
+</p>
+
+---
+
+[![GitHub issues](https://img.shields.io/github/issues/Madhour/SeemsPhishy?style=flat-square)](https://github.com/Madhour/SeemsPhishy/issues)
+[![GitHub forks](https://img.shields.io/github/forks/Madhour/SeemsPhishy?style=flat-square)](https://github.com/Madhour/SeemsPhishy/network)
+[![GitHub stars](https://img.shields.io/github/stars/Madhour/SeemsPhishy?style=flat-square)](https://github.com/Madhour/SeemsPhishy/stargazers)
+[![GitHub license](https://img.shields.io/github/license/Madhour/SeemsPhishy?style=flat-square)](https://github.com/Madhour/SeemsPhishy/blob/main/LICENSE)
+
 </div>
 
-A penetration testing toolkit for collecting and extracting information about target organizations from publicly available text data. 
+
+A penetration testing toolkit for collecting data, extracting information and generating phishing emails, tailored to the target organization. 
 
 
-[![GitHub issues](https://img.shields.io/github/issues/Madhour/SeemsPhishy)](https://github.com/Madhour/SeemsPhishy/issues)
-[![GitHub forks](https://img.shields.io/github/forks/Madhour/SeemsPhishy)](https://github.com/Madhour/SeemsPhishy/network)
-[![GitHub stars](https://img.shields.io/github/stars/Madhour/SeemsPhishy)](https://github.com/Madhour/SeemsPhishy/stargazers)
-[![GitHub license](https://img.shields.io/github/license/Madhour/SeemsPhishy)](https://github.com/Madhour/SeemsPhishy/blob/main/LICENSE)
+
 
 <br>
 
-![Postgres](https://img.shields.io/badge/DB-Postgres-lightgrey?style=flat&logo=postgresql)
-![Docker](https://img.shields.io/badge/Container-Docker-lightgrey?style=flat&logo=docker)
-
-![Flask](https://img.shields.io/badge/WebFramework-Flask-lightgrey?style=flat&logo=flask)
-![Flask](https://img.shields.io/badge/Framework-Bootstrap-lightgrey?style=flat&logo=bootstrap)
-![Flask](https://img.shields.io/badge/PyTorch-lightgrey?style=flat&logo=PyTorch)
-![Flask](https://img.shields.io/badge/Scikit-learn-lightgrey?style=flat&logo=scikit-learn)
-
-![Python](https://img.shields.io/badge/Language-Python-lightgrey?style=flat&logo=python)
-![Flask](https://img.shields.io/badge/Language-HTML-lightgrey?style=flat&logo=html5)
-![Flask](https://img.shields.io/badge/Language-CSS-lightgrey?style=flat&logo=css3)
-
-## Execute (directly on system)
+## Execute (manually)
 
 Start a Postgres database (with Docker)
 ```bash
@@ -66,7 +71,7 @@ or
 docker compose up
 ```
 
-## Components
+# Components
 
 - Database
 - Dataretrival
