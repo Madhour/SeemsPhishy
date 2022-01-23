@@ -173,7 +173,7 @@ def display_keyword_information():
 
         df = backend.get_keywords(entity_id)
         return render_template("/information_gain_companies_detail.html", row_data=df.values.tolist(),
-                               column_names=df.columns, zip=zip, status_col="status")
+                               column_names= ["Keyword", "Method", "Occurence"], zip=zip, status_col="status")
 
     return index()
 
