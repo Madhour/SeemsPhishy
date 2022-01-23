@@ -35,7 +35,7 @@ SeemsPhishy is a penetration testing toolkit for collecting data, extracting inf
 
 Start a Postgres database (with Docker)
 ```bash
-docker container run -p 5433:5432 --name SeemsPhishyDB -e POSTGRES_PASSWORD=1234 postgres:12.2 
+docker container run -p 5432:5432 --name SeemsPhishyDB -e POSTGRES_PASSWORD=1234 postgres:12.2 
 ````
 Execute the ``init.sql`` and ``mockup.sql`` script to populate the database (found under ``src/SeemsPhishy/db``).
 

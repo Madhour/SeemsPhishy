@@ -17,11 +17,11 @@ from SeemsPhishy.textgen import textgen
 class Backend:
     def __init__(self, mode="debug"):
         self.s_db_pwd = 1234
-        self.s_db_port = 5433
+        self.s_db_port = 5432
         self.s_db_user = "postgres"
         self.s_db_database = "postgres"
-        self.s_db_host = "localhost"
-        # self.s_db_host = "database"
+        # self.s_db_host = "localhost"
+        self.s_db_host = "database"
         self.debug_level = mode
 
         self.log = set_logger("Seems-Phishy", mode=mode)
@@ -38,6 +38,9 @@ class Backend:
 
         self.alchemy_engine = sqlalchemy.create_engine(s_connect_string)
         self.alchemy_connection = self.alchemy_engine.connect()
+        time.sleep(5)
+        self.test()
+
         return True
 
     def test(self):
@@ -48,7 +51,7 @@ class Backend:
         """
         # checks if data / tables are present if it fails it initialises the database
         df = pd.read_sql_query("SELECT * FROM SearchedEntities", self.alchemy_connection)
-        print(df)
+        self.log.info(df)
 
     def get_dashboard_infos(self):
         no_file = pd.read_sql_query("SELECT count(n_file_id), count(distinct n_entity_id) FROM datafiles",
@@ -92,6 +95,11 @@ class Backend:
         s_query = "SELECT * FROM keywords"
         df = pd.read_sql_query(s_query, self.alchemy_connection)
         print(df)
+        if df.empty:
+            labels = ""
+            data = []
+            return labels, data
+
         df = df.groupby("s_keyword").sum(["n_no_occurrences"]).sort_values(["n_no_occurrences"], ascending=False)
         df_top = df[:split]
         rest = df[split:]["n_no_occurrences"].sum()

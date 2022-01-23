@@ -1,15 +1,8 @@
 services:
-  app:
-    build: src/.
-    ports:
-      - "5000:5000"
-    depends_on:
-      - database
-    restart: on-failure
 
   database:
     ports:
-      - '5433:5432'
+      - '5432:5432'
     environment:
       - POSTGRES_PASSWORD=1234
     image: 'postgres:14.1'
@@ -24,4 +17,13 @@ services:
       - 8000:8080
     depends_on:
       - database
+
+  app:
+    build: src/.
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+    restart: on-failure
+
 
