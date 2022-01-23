@@ -14,19 +14,10 @@ SPECIAL_TOKENS = {"bos_token": "<|BOS|>",
 
 MAXLEN = 768
 
-
-def outdated_generate(input_text, num_text=1):
-    generator = pipeline('text-generation', model='Madhour/gpt2-eli5')
-
-    output_text = generator(num_return_sequences=num_text)
-
-    return output_text
-
-
 def generate(input_text, num_text=1):
     tokenizer = AutoTokenizer.from_pretrained("Madhour/gpt2-eli5")
     model = AutoModelForCausalLM.from_pretrained("Madhour/gpt2-eli5")
-    prompt = SPECIAL_TOKENS['bos_token'] + "I have a question." + SPECIAL_TOKENS['sep_token'] + input_text + \
+    prompt = SPECIAL_TOKENS['bos_token'] + SPECIAL_TOKENS['sep_token'] + input_text + \
              SPECIAL_TOKENS['sep_token']
     prompt = tensor(tokenizer.encode(prompt)).unsqueeze(0)
     text = model.generate(prompt,
@@ -39,11 +30,11 @@ def generate(input_text, num_text=1):
                           repetition_penalty=2.0,
                           num_return_sequences=3)
 
-    len_input = len("I have a question." + input_text)
+    len_input = len(input_text)
     text_dict = {}
     for text in [tokenizer.decode(a, skip_special_tokens=True) for a in text]:
-        title = text.split("?:")[0][len_input:]
-        body = "".join(text.split("?:")[1:])
+        title = text.split(":")[0][len_input:]
+        body = "".join(text.split(":")[1:])
         text_dict[title] = body
     return [text_dict]
 
