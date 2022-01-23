@@ -24,7 +24,7 @@
 </div>
 
 
-A penetration testing toolkit for collecting data, extracting information and generating phishing emails, tailored to the target organization. 
+SeemsPhishy is a penetration testing toolkit for collecting data, extracting information and generating phishing emails, tailored to the target organization. 
 
 
 
@@ -86,4 +86,4 @@ docker compose up
 
 # Models
 
-The developed and used text generation model can be found here: https://huggingface.co/Madhour/gpt2-eli5.
+The developed and used text generation model can be found here: https://huggingface.co/Madhour/gpt2-eli5. For further information or reproduction, check out the used [notebook](doc/gpt2_finetuning.ipynb).
