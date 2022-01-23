@@ -7,6 +7,7 @@ import requests
 import unicodedata
 import re
 import os
+from SeemsPhishy.utils import set_logger
 
 
 class TextParser:
@@ -14,27 +15,33 @@ class TextParser:
     def __init__(self, files):
         self.files = files  # {header-title : url}
         self.text = {}
+        self.log = set_logger("OCR", mode="debug")
 
     def convert_files(self, filenumber):
         counter = 0
         # download pdfs and parse text
+        self.log.debug(self.files)
+        self.log.debug(filenumber)
         for key in self.files:
             if counter < int(filenumber):
                 # self.downloadPDF(self.files[key], key)
                 try:
+                    self.log.debug(self.files[key])
+                    self.log.debug(key)
                     self.download_pdf(self.files[key], key)
-                except:
+                except Exception as e:
+                    self.log.error(e)
                     counter = counter + 1
-                    print("Exception")
+                    self.log.warn("Exception")
                 counter = counter + 1
             else:
-                print("Skipped")
+                self.log.info("Skipped")
 
         return self.text
 
     def text_parser(self, pdf_path, filename):
-        print(pdf_path)
-        print(filename)
+        self.log.debug(pdf_path)
+        self.log.debug(filename)
         # Part 1 (extract text from file)
         resource_manager = PDFResourceManager(caching=True)
         out_text = StringIO()
@@ -62,7 +69,7 @@ class TextParser:
         # file.write(text)
         # file.close()
 
-    def slugify(value, allow_unicode=False):
+    def slugify(self, value, allow_unicode=False):
         value = str(value)
         if allow_unicode:
             value = unicodedata.normalize('NFKC', value)
@@ -75,14 +82,15 @@ class TextParser:
         full_filename = filename
         filename = filename[:25].replace(" ", "_")
         slugified = self.slugify(filename)
-        filepath = f"src/SeemsPhishy/dataretrieval/lib/PDF/{slugified}.pdf"
+        # filepath = f"/dataretrieval/lib/PDF/{slugified}.pdf"
+        filepath = f"./{slugified}.pdf"
         response = requests.get(url_name)
-        print(filename)
-        print(slugified)
+        self.log.debug(filename)
+        self.log.debug(slugified)
         file = open(filepath, "wb")
-        print(file)
+        self.log.debug(file)
         file.write(response.content)
         file.close()
         # convert2text
         self.text_parser(filepath, full_filename)
-        # os.remove(filepath)
+        os.remove(filepath)

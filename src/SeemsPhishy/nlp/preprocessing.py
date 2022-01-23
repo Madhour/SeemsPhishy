@@ -2,10 +2,10 @@ from nltk.stem import PorterStemmer
 import pandas as pd
 
 
-def pipe_preprocessing(text, s_w_r, pref_operation, nlp):
+def pipe_preprocessing(text, s_w_r, pref_operation, nlp_model):
     contents = text
     corpus = contents
-    doc = nlp(corpus)
+    doc = nlp_model(corpus)
 
     p = PorterStemmer()
 
@@ -52,7 +52,7 @@ def pipe_preprocessing(text, s_w_r, pref_operation, nlp):
     # Stop Word Removal (Default = True)
     # ______________________________________________________________________________
     if s_w_r is True:
-        df = df[df.STOP is False]
+        df = df[df.STOP == False]
 
     # ______________________________________________________________________________
     # Lemma or Stemming

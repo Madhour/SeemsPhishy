@@ -21,6 +21,7 @@ class Backend:
         self.s_db_user = "postgres"
         self.s_db_database = "postgres"
         self.s_db_host = "localhost"
+        # self.s_db_host = "database"
         self.debug_level = mode
 
         self.log = set_logger("Seems-Phishy", mode=mode)
@@ -193,9 +194,10 @@ class Backend:
         else:
             self.log.info("Dictionary is empty!")
             self.log.info("TRY AGAIN WITH ANOTHER ENTITY NAME")
+            raise ConnectionError("Connection to Bing-Search not successful - Try again")
 
         corpus = TextParser(results).convert_files(form_infos["number_of_results"])
-        self.log.error(corpus)
+        self.log.debug(corpus)
         query_2 = f"SELECT n_entity_id FROM SearchedEntities WHERE s_name = '{s_name}';"
         entity_id = pd.read_sql_query(query_2, self.alchemy_connection)
         n_entity_id = entity_id.loc([0][0])
@@ -227,6 +229,7 @@ class Backend:
 
         if "entity_id" in form_infos:
             n_entity_id = form_infos["entity_id"]
+            self.log.debug(f"found entity {n_entity_id}")
         else:
             s_name = form_infos["custom_name"]
             query_2 = f"SELECT n_entity_id FROM SearchedEntities WHERE s_name = '{s_name}';"
