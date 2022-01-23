@@ -28,18 +28,18 @@ def main(conn, texts, stop_word_removal=True, stemming_lemma='l', keyword=True, 
                 query_entity = f"INSERT INTO Keywords (n_file_id, s_keyword, s_tag) VALUES ({key}, '{element[0]}', 'NER');"
                 sql_query_df = sqlalchemy.text(query_entity)
                 conn.execute(sql_query_df)
-    print(texts)
+    #print(texts)
 
     # do preprocessing
     for key2, text2 in texts.items():
-        print(text2)
+        #print(text2)
         pre_text = str(pipe_preprocessing(text2, stop_word_removal, stemming_lemma, nlp_model))
-        pre_texts.append(pre_text)
+        #pre_texts.append(pre_text)
 
     # execute tf-idf with sklearn
     if tf_idf is True:
         key_new = list(texts.keys())
-        print(key_new)
+        #print(key_new)
         sklearn_tf_idf(conn, key_new[0], pre_texts)
 
 
@@ -55,7 +55,7 @@ def main(conn, texts, stop_word_removal=True, stemming_lemma='l', keyword=True, 
                 query_entity = f"INSERT INTO Keywords (n_file_id, s_keyword, s_tag) VALUES ({key_new[0]}, '{element[0]}', 'KEYWORDS');"
                 sql_query_df = sqlalchemy.text(query_entity)
                 conn.execute(sql_query_df)
-                print(element[0])
+                #print(element[0])
 
     log.debug(entities)
     log.debug(keywords)
