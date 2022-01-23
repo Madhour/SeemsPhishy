@@ -116,14 +116,13 @@ class Backend:
         s_query = """
                 SELECT s_name as entity, n_entity_id as id
                 FROM searchedentities
-                WHERE n_status = 0
                 """
         df = pd.read_sql_query(s_query, self.alchemy_connection)
         return df
 
     def get_keywords(self, entity_id):
         s_query = f"""
-        SELECT k.s_keyword, k.s_tag, k.n_no_occurrences
+        SELECT d.s_title, k.s_keyword, k.s_tag, k.n_no_occurrences
         FROM keywords k
         INNER JOIN datafiles d on k.n_file_id = d.n_file_id
         INNER JOIN searchedentities s on s.n_entity_id = d.n_entity_id
