@@ -1,7 +1,7 @@
 from nltk.stem import PorterStemmer
 import pandas as pd
 
-
+# function for pre-processing with spacy
 def pipe_preprocessing(text, s_w_r, pref_operation, nlp_model):
     contents = text
     corpus = contents
@@ -9,6 +9,7 @@ def pipe_preprocessing(text, s_w_r, pref_operation, nlp_model):
 
     p = PorterStemmer()
 
+    # creating lists for the dataframe
     text_df = []
     lemma_df = []
     pos_df = []
@@ -34,6 +35,7 @@ def pipe_preprocessing(text, s_w_r, pref_operation, nlp_model):
     for w in corp_stem:
         stemm_list.append(p.stem(w))
 
+    #creating the dataframe
     data = {'Text': text_df, 'Lemma': lemma_df, 'Stemm': stemm_list, 'POS': pos_df, 'TAG': tag_df, 'DEP': dep_df,
             'SHAPE': shape_df, 'STOP': stop_df}
     df = pd.DataFrame(data)
