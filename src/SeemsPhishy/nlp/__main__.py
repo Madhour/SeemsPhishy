@@ -34,7 +34,7 @@ def main(conn, texts, stop_word_removal=True, stemming_lemma='l', keyword=True, 
     for key2, text2 in texts.items():
         #print(text2)
         pre_text = str(pipe_preprocessing(text2, stop_word_removal, stemming_lemma, nlp_model))
-        #pre_texts.append(pre_text)
+        pre_texts.append(pre_text)
 
     # execute tf-idf with sklearn
     if tf_idf is True:
