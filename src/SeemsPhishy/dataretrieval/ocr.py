@@ -94,3 +94,9 @@ class TextParser:
         # convert2text
         self.text_parser(filepath, full_filename)
         os.remove(filepath)
+
+
+if __name__ == "__main__":
+    # for debugging only
+    text = TextParser({"protiviti new interns guide":"https://jcu.edu/sites/default/files/2019-10/Protiviti%20Intern%20-%202019%20-%20FINAL.pdf"}).convert_files(1)
+    print(text)
