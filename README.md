@@ -71,6 +71,8 @@ or
 docker compose up
 ```
 
+Lastly visit ```localhost:5000``` to access the Web-GUI
+
 # Components
 
 - Database
