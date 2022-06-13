@@ -24,7 +24,9 @@
 </div>
 
 
-SeemsPhishy is a penetration testing toolkit for collecting data, extracting information and generating phishing emails, tailored to the target organization. 
+SeemsPhishy is a penetration testing toolkit for collecting data, extracting information and generating phishing emails, tailored to the target organization.
+
+Through analyzing overt/public documents of an organization, certain keywords that pertain to that organization can be extracted. Subsequently, the ML-model generates a newsletter text on the basis of the extracted keywords. The main idea/assumption behind this approach is that a newsletter email containing certain keywords that pertain to the organization might not be as easily dismissed as a generic phishing email. The generated text aims to evoke interest and get the reader to click on "read more" which can be given a custom payload to track, for example, the number of clicks. 
 
 [![demo](doc/seemsphishy_demo.png)](https://youtu.be/E_0szrG_Aiw)
 
