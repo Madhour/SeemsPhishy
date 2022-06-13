@@ -26,7 +26,7 @@
 
 SeemsPhishy is a penetration testing toolkit for collecting data, extracting information and generating phishing emails, tailored to the target organization. 
 
-
+[![demo](doc/seemsphishy_demo.png)](https://youtu.be/E_0szrG_Aiw)
 
 
 <br>
